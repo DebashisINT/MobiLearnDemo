@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".DashboardActivity"
+    style="@style/ll_root_style">
+
+    <include
+        android:id="@+id/dashToolbar"
+        layout="@layout/custom_toolbar"
+        />
+
+    <androidx.drawerlayout.widget.DrawerLayout
+        android:id="@+id/drawer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:openDrawer="start">
+
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/fragContainerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+        <com.google.android.material.navigation.NavigationView
+            android:id="@+id/navView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:menu="@menu/app_menu"
+            android:background="#e4f1ff"
+            app:dividerInsetStart="@dimen/_60sdp"
+            app:dividerInsetEnd="@dimen/_50sdp"
+            app:itemTextColor="@color/black"
+            app:drawerLayoutCornerSize="@dimen/_1sdp"
+            app:itemShapeFillColor="@color/transparent"
+            app:headerLayout="@layout/menu_header"
+            android:theme="@style/navigationView"
+            app:itemIconSize="@dimen/_28sdp"
+            android:fitsSystemWindows="true"
+            android:layout_gravity="start"/>
+
+    </androidx.drawerlayout.widget.DrawerLayout>
+
+</LinearLayout>

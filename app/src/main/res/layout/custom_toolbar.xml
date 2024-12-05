@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/_40sdp"
+    app:contentInsetStart="0dp"
+    android:background="@color/toolbar_lms"
+    android:id="@+id/custom_toolbar">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/toolbarText"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="Toolbar"
+            android:textStyle="bold"
+            android:textSize="@dimen/_12sdp"
+            android:textColor="@color/white"
+            android:fontFamily="@font/poppins_regular"
+            android:gravity="center"/>
+
+        <Space
+            android:layout_width="@dimen/_7sdp"
+            android:layout_height="match_parent"/>
+
+        <ImageView
+            android:id="@+id/iv_home_icon"
+            android:layout_width="@dimen/_18sdp"
+            android:layout_height="@dimen/_18sdp"
+            android:src="@drawable/home"
+            android:scaleType="fitXY"
+            android:layout_gravity="center" />
+
+        <Space
+            android:id="@+id/up_logo_spc"
+            android:layout_width="@dimen/_7sdp"
+            android:layout_height="match_parent"/>
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
+
+            <ImageView
+                android:id="@+id/logo"
+                android:layout_width="@dimen/_22sdp"
+                android:layout_height="@dimen/_22sdp"
+                android:src="@drawable/ic_notification"
+                android:scaleType="fitXY"
+                android:visibility="visible"
+                android:layout_gravity="center" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_noti_count"
+                android:layout_width="@dimen/_15sdp"
+                android:layout_height="@dimen/_15sdp"
+                android:text="1+"
+                android:textSize="@dimen/_11sdp"
+                android:background="@drawable/xx"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:layout_gravity="right"
+                android:visibility="gone"/>
+
+        </FrameLayout>
+
+
+
+        <Space
+            android:id="@+id/down_logo_spc"
+            android:layout_width="@dimen/_7sdp"
+            android:layout_height="match_parent"/>
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/_7sdp"
+            android:layout_gravity="center">
+
+            <ImageView
+                android:id="@+id/add_bookmark"
+                android:layout_width="@dimen/_26sdp"
+                android:layout_height="@dimen/_25sdp"
+                android:contentDescription="@null"
+                android:padding="@dimen/_5sdp"
+                android:layout_marginTop="@dimen/_1sdp"
+                android:src="@drawable/ic_bookmark_fill"
+                android:tint="@color/white"
+                android:visibility="visible" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_saved_count"
+                android:layout_width="@dimen/_15sdp"
+                android:layout_height="15dp"
+                android:layout_gravity="right"
+                android:background="@drawable/xx"
+                android:gravity="center"
+                android:text="1+"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_11sdp"
+                android:visibility="gone" />
+
+        </FrameLayout>
+
+    </LinearLayout>
+
+</androidx.appcompat.widget.Toolbar>

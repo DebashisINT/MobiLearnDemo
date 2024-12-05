@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardBackgroundColor="@color/color_charcoal"
+    app:cardCornerRadius="@dimen/_15sdp"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        style="@style/ll_style"
+        android:background="@color/color_charcoal"
+        android:orientation="horizontal"
+        android:gravity="center">
+
+        <ProgressBar
+            android:layout_width="@dimen/_30sdp"
+            android:layout_height="@dimen/_30sdp"
+            android:layout_gravity="center|start"
+            android:indeterminateTint="@color/color_white"
+            android:layout_marginLeft="@dimen/_10sdp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/_55sdp"
+            android:text="Loading"
+            android:gravity="center|start"
+            android:fontFamily="@font/poppins_regular"
+            android:paddingStart="@dimen/_15sdp"
+            android:textColor="@color/color_white" />
+
+        <TextView
+            android:id="@+id/tv_loading"
+            android:layout_width="@dimen/_50sdp"
+            android:layout_height="@dimen/_55sdp"
+            android:text=" ... "
+            android:gravity="center|start"
+            android:paddingStart="@dimen/_5sdp"
+            android:textColor="@color/color_white" />
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

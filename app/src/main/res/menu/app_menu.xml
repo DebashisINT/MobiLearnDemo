@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    >
+
+    <group
+        android:id="@+id/gr">
+    <item android:id="@+id/menu_home"
+        android:title="Home"/>
+    </group>
+
+    <group
+        android:id="@+id/gr1">
+        <item android:id="@+id/menu_lms"
+            android:title="LMS"/>
+
+        <item android:id="@+id/menu_lms_dashboard"
+            android:title="LMS Dashboard"/>
+        <item android:id="@+id/menu_my_learning"
+            android:title="My Learning"/>
+        <item android:id="@+id/menu_all_topics"
+            android:title="All Topics"/>
+        <item android:id="@+id/menu_my_topics"
+            android:title="My Topics"/>
+        <item android:id="@+id/menu_my_performance"
+            android:title="My Performance"/>
+        <item android:id="@+id/menu_leaderboard"
+            android:title="Leaderboard"/>
+    </group>
+
+    <group
+        android:id="@+id/gr2">
+        <item android:id="@+id/menu_privacy_policy"
+            android:title="Privacy Policy"/>
+
+    </group>
+
+</menu>
