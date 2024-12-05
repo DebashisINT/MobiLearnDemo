@@ -13,7 +13,6 @@ object Pref : PreferenceHolder() {
     var login_time: String? by bindToPreferenceFieldNullable()
     var login_date_time: String? by bindToPreferenceFieldNullable()
     var login_date: String? by bindToPreferenceFieldNullable()
-    var totalAttendance: String by bindToPreferenceField("0", "totalAttendance")
     var isRememberMe: Boolean by bindToPreferenceField(false, "isRememberMe")
     var PhnNo: String by bindToPreferenceField("", "PhnNo")
     var pwd: String by bindToPreferenceField("", "pwd")

@@ -86,5 +86,6 @@ dependencies {
     implementation ("com.google.firebase:firebase-messaging:23.1.0")
     implementation ("com.google.firebase:firebase-analytics:21.0.0") // or other Firebase libraries you need
     implementation("com.google.auth:google-auth-library-oauth2-http:1.3.0")
+    implementation("com.vmadalin:easypermissions-ktx:1.0.0")
 
 }

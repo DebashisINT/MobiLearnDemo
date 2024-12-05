@@ -18,6 +18,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatTextView
 import com.breezemobilearndemo.api.LoginRepositoryProvider
 import com.breezemobilearndemo.databinding.ActivityLoginBinding
+import com.vmadalin.easypermissions.EasyPermissions
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
@@ -53,6 +54,8 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun initView() {
+
+        checkPermission()
         loginView.loginTV.setOnClickListener(this)
         loginView.cbRememberMe .isChecked = Pref.isRememberMe
 
@@ -71,6 +74,22 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
         }
 
     }
+
+    private fun checkPermission() {
+        var permissionL: ArrayList<String> = ArrayList()
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (!hasPermission(arrayOf(android.Manifest.permission.POST_NOTIFICATIONS)))
+                permissionL.add(android.Manifest.permission.POST_NOTIFICATIONS)
+        }
+        requestPermission(permissionL.toTypedArray(), 999, "Allow Permissions.")
+
+    }
+    private fun requestPermission(permissionList: Array<String>, reqCode: Int, msg: String) {
+        EasyPermissions.requestPermissions(this, msg, reqCode, *permissionList)
+    }
+
+    private fun hasPermission(permissionList: Array<String>) = EasyPermissions.hasPermissions(this, *permissionList)
 
     override fun onClick(v: View?) {
 
@@ -117,8 +136,8 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
 
         val repository = LoginRepositoryProvider.provideLoginRepository()
         DashboardActivity.compositeDisposable.add(
-            repository.login(username, password, "", "",
-                AppUtils.getCurrentDateTime(), Pref.imei, AppUtils.getVersionName(this), "", Pref.deviceToken)
+            repository.login(username, password,
+               AppUtils.getVersionName(this), Pref.deviceToken)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe({ result ->
@@ -171,7 +190,6 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
         Pref.login_time = AppUtils.getCurrentTimeWithMeredian()
         Pref.login_date_time = AppUtils.getCurrentDateTime()
         Pref.login_date = AppUtils.getCurrentDateChanged()
-        Pref.totalAttendance = loginResponse.user_count!!.total_attendance!!
 
         val anim = ActivityOptions.makeCustomAnimation(
             applicationContext,

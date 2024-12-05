@@ -224,7 +224,6 @@ class DashboardActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
             is MyLearningFragment -> {
                 dashView.dashToolbar.ivHomeIcon.visibility = View.GONE
                 dashView.dashToolbar.addBookmark.visibility = View.VISIBLE
-                dashView.dashToolbar.tvSavedCount.visibility = View.VISIBLE
                 dashView.dashToolbar.logo.visibility = View.VISIBLE
                 dashView.dashToolbar.downLogoSpc.visibility = View.GONE
                 toolbarTitle.text = "Home"
@@ -232,7 +231,6 @@ class DashboardActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
             else -> {
                 dashView.dashToolbar.ivHomeIcon.visibility = View.VISIBLE
                 dashView.dashToolbar.addBookmark.visibility = View.VISIBLE
-                dashView.dashToolbar.tvSavedCount.visibility = View.VISIBLE
                 dashView.dashToolbar.logo.visibility = View.GONE
                 dashView.dashToolbar.upLogoSpc.visibility = View.GONE
             }

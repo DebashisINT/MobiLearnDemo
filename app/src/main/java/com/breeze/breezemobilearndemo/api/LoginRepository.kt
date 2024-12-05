@@ -6,8 +6,8 @@ import io.reactivex.Observable
 
 
 class LoginRepository(val apiService: LoginApi) {
-    fun login(username: String, password: String, latitude: String, longitude: String, login_time: String, imei: String, version: String, location: String,
+    fun login(username: String, password: String,version: String,
               device_token: String): Observable<LoginResponse> {
-        return apiService.getLoginResponse(username, password, latitude, longitude, login_time, imei, version, location, device_token)
+        return apiService.getLoginResponse(username, password,version, device_token)
     }
 }

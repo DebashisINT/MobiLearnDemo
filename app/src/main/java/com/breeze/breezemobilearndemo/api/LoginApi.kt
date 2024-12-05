@@ -10,10 +10,9 @@ import retrofit2.http.*
 
 interface LoginApi {
     @FormUrlEncoded
-    @POST("UserLogin/Login")
-    fun getLoginResponse(@Field("username") email: String, @Field("password") password: String, @Field("latitude") latitude: String,
-                         @Field("longitude") longitude: String, @Field("login_time") login_time: String, @Field("imei") imei: String,
-                         @Field("version_name") version: String, @Field("address") address: String, @Field("device_token") device_token: String)
+    @POST("LMSUserLogin/Login")
+    fun getLoginResponse(@Field("username") email: String, @Field("password") password: String,
+                         @Field("version_name") version: String, @Field("device_token") device_token: String)
             : Observable<LoginResponse>
 
 
