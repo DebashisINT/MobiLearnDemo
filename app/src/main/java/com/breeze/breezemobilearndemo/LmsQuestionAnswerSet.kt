@@ -316,7 +316,7 @@ class LmsQuestionAnswerSet : Fragment() , View.OnClickListener{
             //(mContext as DashboardActivity).setTopBarTitle("Quiz : "+questionSerialPosition+"/"+finalL.size)
 
             loadQuestionAns(question,option1,option2,option3,option4,if(questionSerialPosition==finalL.size) true else false)
-            lmsQuestionView.progressWheel.spin()
+            lmsQuestionView.progressWheel.stopSpinning()
 
         } catch (e: Exception) {
             e.printStackTrace()

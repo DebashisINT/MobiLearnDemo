@@ -62,6 +62,7 @@ class VideoPlayLMS : Fragment() {
     private lateinit var question_ans_setL :ArrayList<QuestionL>
     private lateinit var cmtAdapter: AdapterComment
     private lateinit var response: VideoTopicWiseResponse
+    private var isReceiverRegistered = false
 
 
     companion object {
@@ -305,16 +306,21 @@ class VideoPlayLMS : Fragment() {
 
             onActivityStateChanged = adapter.registerActivityState()
 
-            screenOffReceiver = object : BroadcastReceiver() {
-                override fun onReceive(context: Context?, intent: Intent?) {
-                    if (intent?.action == Intent.ACTION_SCREEN_OFF) {
-                        adapter.pauseCurrentVideo()
+            if (!isReceiverRegistered) {
+
+                screenOffReceiver = object : BroadcastReceiver() {
+                    override fun onReceive(context: Context?, intent: Intent?) {
+                        if (intent?.action == Intent.ACTION_SCREEN_OFF) {
+                            adapter.pauseCurrentVideo()
+                        }
                     }
                 }
-            }
 
-            val filter = IntentFilter(Intent.ACTION_SCREEN_OFF)
-            requireActivity().registerReceiver(screenOffReceiver, filter)
+                val filter = IntentFilter(Intent.ACTION_SCREEN_OFF)
+                requireActivity().registerReceiver(screenOffReceiver, filter)
+
+                isReceiverRegistered = true
+            }
 
 
             videoPlayLMSView.viewPager2.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
@@ -554,16 +560,20 @@ class VideoPlayLMS : Fragment() {
 
             onActivityStateChanged1 = adapter1.registerActivityState()
 
-            screenOffReceiver = object : BroadcastReceiver() {
-                override fun onReceive(context: Context?, intent: Intent?) {
-                    if (intent?.action == Intent.ACTION_SCREEN_OFF) {
-                        adapter1.pauseCurrentVideo()
+
+            if (!isReceiverRegistered) {
+                screenOffReceiver = object : BroadcastReceiver() {
+                    override fun onReceive(context: Context?, intent: Intent?) {
+                        if (intent?.action == Intent.ACTION_SCREEN_OFF) {
+                            adapter1.pauseCurrentVideo()
+                        }
                     }
                 }
-            }
 
-            val filter = IntentFilter(Intent.ACTION_SCREEN_OFF)
-            requireActivity().registerReceiver(screenOffReceiver, filter)
+                val filter = IntentFilter(Intent.ACTION_SCREEN_OFF)
+                requireActivity().registerReceiver(screenOffReceiver, filter)
+                isReceiverRegistered = true
+            }
 
             videoPlayLMSView.viewPager2.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
                 override fun onPageSelected(position: Int) {
@@ -828,15 +838,11 @@ class VideoPlayLMS : Fragment() {
                 }
                 if (question_ans_setL.size > 0) {
                     LmsQuestionAnswerSet.topic_name = topic_name
-                    val videoPlayLMS =
-                        (context as DashboardActivity).supportFragmentManager.findFragmentByTag(
-                            "VideoPlayLMS"
-                        ) as VideoPlayLMS
-                    videoPlayLMS.stopVideoPlayback()
+                    //val videoPlayLMS = (context as DashboardActivity).supportFragmentManager.findFragmentByTag("VideoPlayLMS")
+                    stopVideoPlayback()
                     CustomStatic.IsQuestionPageOpen = false
 
-                    (context as DashboardActivity).loadFrag(
-                        LmsQuestionAnswerSet.getInstance(question_ans_setL),LmsQuestionAnswerSet::class.java.simpleName, true)
+                    (context as DashboardActivity).loadFrag(LmsQuestionAnswerSet.getInstance(question_ans_setL),LmsQuestionAnswerSet::class.java.simpleName, true)
 
                 } else {
                     CustomStatic.IsQuestionPageOpen = false
@@ -868,7 +874,10 @@ class VideoPlayLMS : Fragment() {
                 player.stop()
             }
         }
-        requireActivity().unregisterReceiver(screenOffReceiver)
+        if (isReceiverRegistered) {
+            requireActivity().unregisterReceiver(screenOffReceiver)
+            isReceiverRegistered = false
+        }
 
     }
 
@@ -1088,10 +1097,19 @@ class VideoPlayLMS : Fragment() {
             }
         }
          requireActivity().requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
-        if (::screenOffReceiver.isInitialized) {
-                requireActivity().unregisterReceiver(screenOffReceiver)
-            }
+        if (isReceiverRegistered) {
+            requireActivity().unregisterReceiver(screenOffReceiver)
+            isReceiverRegistered = false
+        }
 
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        if (isReceiverRegistered) {
+            requireActivity().unregisterReceiver(screenOffReceiver)
+            isReceiverRegistered = false
+        }
     }
 
     fun callDestroy() {

@@ -37,6 +37,7 @@ class MyLearningProgressAdapter(
     override fun onBindViewHolder(holder: MyLearningProgressViewHolder, position: Int) {
         val item = mList[position]
         val binding = holder.binding
+        binding.llRetryIncorrectQuizHeader.isEnabled  = false
 
         if (item.content_url != null) {
             Glide.with(mContext)
@@ -70,32 +71,36 @@ class MyLearningProgressAdapter(
                     binding.tvProgressText.setImageResource(R.drawable.quiz_done)
                     binding.tvQuizstatus.text = "Quiz Done"
                     binding.llRetryIncorrectQuizHeader.visibility = View.VISIBLE
-                    binding.llRetryIncorrectQuizHeader.isClickable = true
+                    binding.llRetryIncorrectQuizHeader.isEnabled = true
 
-                    if (contentId.isNullOrEmpty()) {
+                    if (contentId?.size!! == 0) {
                         binding.llRetryIncorrectQuizHeader.visibility = View.GONE
                     }
-                } else {
+                }
+                else if (item.CompletionStatus == true && contentId?.size!! == 0) {
+                    binding.llRetryIncorrectQuizHeader.visibility = View.GONE
+                }
+                else {
                     binding.tvProgressText.setImageResource(R.drawable.quiz_pending)
                     binding.tvQuizstatus.text = "Quiz Pending"
                     binding.llRetryIncorrectQuizHeader.visibility = View.VISIBLE
-                    binding.llRetryIncorrectQuizHeader.isClickable = false
+                    binding.llRetryIncorrectQuizHeader.isEnabled = false
                 }
             } else {
                 binding.tvProgressText.visibility = View.GONE
                 binding.llRetryIncorrectQuizHeader.visibility = View.GONE
-                binding.llRetryIncorrectQuizHeader.isClickable = false
+                binding.llRetryIncorrectQuizHeader.isEnabled = false
             }
 
-            if (item.question_list.isEmpty()) {
+            if (item.question_list.size == 0) {
                 binding.llQuizHeader.visibility = View.GONE
                 binding.llRetryIncorrectQuizHeader.visibility = View.GONE
-                binding.llRetryIncorrectQuizHeader.isClickable = false
+                binding.llRetryIncorrectQuizHeader.isEnabled = false
             }
         } catch (e: Exception) {
             binding.tvProgressText.visibility = View.GONE
             binding.llRetryIncorrectQuizHeader.visibility = View.GONE
-            binding.llRetryIncorrectQuizHeader.isClickable = false
+            binding.llRetryIncorrectQuizHeader.isEnabled = false
         }
 
         if (item.Watch_Percentage.isNotEmpty()) {
@@ -106,7 +111,7 @@ class MyLearningProgressAdapter(
             } else {
                 binding.tvProgressStatus.setImageResource(R.drawable.watch_pending)
                 binding.tvWatchstatus.text = "Watch Pending"
-                binding.llRetryIncorrectQuizHeader.isClickable = false
+                binding.llRetryIncorrectQuizHeader.isEnabled = false
             }
         } else {
             binding.learningProgressStatus.progress = 0

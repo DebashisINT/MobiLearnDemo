@@ -210,7 +210,6 @@
                 android:layout_marginStart="@dimen/_3sdp"
                 android:paddingEnd="@dimen/_2sdp"
                 android:background="@drawable/back_round_lms_card"
-                android:clickable="false"
                 android:orientation="horizontal">
 
                 <ImageView
