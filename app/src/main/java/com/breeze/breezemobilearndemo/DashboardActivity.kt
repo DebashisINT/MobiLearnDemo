@@ -27,6 +27,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
+import com.breeze.breezemobilearndemo.CustomStatic
 import com.breezemobilearndemo.api.LMSRepoProvider
 import com.breezemobilearndemo.databinding.ActivityDashboardBinding
 import com.google.android.gms.tasks.Task
@@ -228,6 +229,11 @@ class DashboardActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
                 dashView.dashToolbar.downLogoSpc.visibility = View.GONE
                 toolbarTitle.text = "Home"
             }
+            is VideoPlayLMS -> {
+                dashView.dashToolbar.ivHomeIcon.visibility = View.GONE
+                dashView.dashToolbar.addBookmark.visibility = View.VISIBLE
+                dashView.dashToolbar.logo.visibility = View.GONE
+            }
             else -> {
                 dashView.dashToolbar.ivHomeIcon.visibility = View.VISIBLE
                 dashView.dashToolbar.addBookmark.visibility = View.VISIBLE
@@ -326,7 +332,7 @@ class DashboardActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
                 Log.d("token_firebase", "FCM Token: $token")
 
             }
-
+        CustomStatic.IsBackClick = false
         println("load_frag " + fragment.toString() + " " + Pref.user_id.toString())
     }
 
@@ -359,6 +365,7 @@ class DashboardActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
             backpressed = System.currentTimeMillis()
         }
         else if (currentFragment is VideoPlayLMS) {
+            CustomStatic.IsBackClick = true
             super.onBackPressed()
             val updatedFragment = getFragment()
             if (updatedFragment is MyLearningFragment) {
