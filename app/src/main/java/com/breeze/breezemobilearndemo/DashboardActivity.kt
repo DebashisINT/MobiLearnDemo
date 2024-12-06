@@ -358,7 +358,7 @@ class DashboardActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
                 loadFrag(NotificationFragment(), NotificationFragment::class.java.name)
             }
             dashView.dashToolbar.addBookmark.id -> {
-                loadFrag(BookmarkFrag(), BookmarkFrag::class.java.name, true)
+                loadFrag(BookmarkFrag(), BookmarkFrag::class.java.name)
             }
         }
     }
