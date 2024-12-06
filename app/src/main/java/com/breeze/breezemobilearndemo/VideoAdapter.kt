@@ -522,6 +522,14 @@ class VideoAdapter(var viewPager2: ViewPager2,
 
 
     private fun showWatchPointPopup( content_watch_point: Int) {
+        if(CustomStatic.IsBackClick == true){
+            try {
+                popupWindow.dismiss()
+            } catch (e: Exception) {
+               e.printStackTrace()
+            }
+            return
+        }
 
         val inflater: LayoutInflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         val popupView: View = inflater.inflate(R.layout.popup_layout_congratulation_, null)

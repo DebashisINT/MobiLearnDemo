@@ -974,7 +974,6 @@ class VideoPlayLMS : Fragment() {
         }
     }
 
-
     @SuppressLint("MissingInflatedId")
     private fun showLikePointPopup(content_like_point: Int) {
         val inflater: LayoutInflater =
@@ -1008,7 +1007,6 @@ class VideoPlayLMS : Fragment() {
         }, 1700)
 
     }
-
 
     private fun saveContentWiseInfo(obj: LMS_CONTENT_INFO) {
         try {
@@ -1083,8 +1081,6 @@ class VideoPlayLMS : Fragment() {
             player.play()
         }
     }
-
-
 
     override fun onDestroy() {
         super.onDestroy()

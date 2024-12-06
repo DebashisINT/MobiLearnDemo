@@ -90,6 +90,7 @@ public class CustomStatic {
     public static Integer VideoPosition = -1;
 
     public static Boolean IsHomeClick = false;
+    public static Boolean IsBackClick = false;
 
    // public static Boolean IsLMSLeaderboardClick = false;
 

@@ -114,6 +114,8 @@ class MyLearningFragment : Fragment(), OnClickListener {
 
     override fun onResume() {
         super.onResume()
+        (mContext as DashboardActivity).showHamburgerIcon()
+        println("tag_lf MyLearningFragment onResume")
         (mContext as DashboardActivity).toolbarTitle.text = "Home"
         try {
             var votVIwedL = AppDatabase.getDBInstance()!!.lmsNotiDao().getNotViwed(false) as ArrayList<LMSNotiEntity>
@@ -135,6 +137,31 @@ class MyLearningFragment : Fragment(), OnClickListener {
             }
         } catch (e: Exception) {
             Pref.CurrentBookmarkCount = 0
+        }
+
+        try {
+            if (!Pref.LastVideoPlay_TopicName.equals("")) {
+                homeView.cvLastVidRoot.visibility = View.VISIBLE
+
+                homeView.tvFragMyLearningLastContentName.text = Pref.LastVideoPlay_ContentName
+                homeView.tvFragMyLearningLastContentDesc.text = Pref.LastVideoPlay_ContentDesc
+
+                if (!Pref.LastVideoPlay_BitmapURL.equals("")) {
+                    Glide.with(mContext)
+                        .load(Pref.LastVideoPlay_BitmapURL)
+                        .apply(
+                            RequestOptions.placeholderOf(R.drawable.ic_image)
+                                .error(R.drawable.ic_image)
+                        )
+                        .into(homeView.ivFragMyLearningLastTopicImg)
+                } else {
+                    homeView.ivFragMyLearningLastTopicImg.setImageResource(R.drawable.ic_image)
+                }
+            } else {
+                homeView.cvLastVidRoot.visibility = View.GONE
+            }
+        } catch (e:Exception) {
+            e.printStackTrace()
         }
     }
 
@@ -423,11 +450,11 @@ class MyLearningFragment : Fragment(), OnClickListener {
     fun callLastPlayedVideo() {
 
         try {
-            if(!Pref.LastVideoPlay_TopicName.equals("")){
+            /*if(!Pref.LastVideoPlay_TopicName.equals("")){
                 homeView.cvLastVidRoot .visibility = View.VISIBLE
 
-                homeView.tvFragMyLearningLastContentName .text = Pref.LastVideoPlay_ContentName
-                homeView.tvFragMyLearningLastContentDesc .text = Pref.LastVideoPlay_ContentDesc
+                homeView.tvFragMyLearningLastContentName.text = Pref.LastVideoPlay_ContentName
+                homeView.tvFragMyLearningLastContentDesc.text = Pref.LastVideoPlay_ContentDesc
 
                 if (!Pref.LastVideoPlay_BitmapURL.equals("")) {
                     Glide.with(mContext)
@@ -440,7 +467,7 @@ class MyLearningFragment : Fragment(), OnClickListener {
                 }
             }else{
                 homeView.cvLastVidRoot .visibility = View.GONE
-            }
+            }*/
 
             homeView.cvLastVidRoot.setOnClickListener {
                 setHomeClickFalse()
@@ -454,6 +481,7 @@ class MyLearningFragment : Fragment(), OnClickListener {
         }
 
     }
+
 
 
 }

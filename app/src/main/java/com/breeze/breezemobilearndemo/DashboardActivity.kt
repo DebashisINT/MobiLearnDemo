@@ -5,6 +5,11 @@ import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import android.content.pm.ActivityInfo
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.graphics.PorterDuff
+import android.graphics.PorterDuffColorFilter
+import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
@@ -26,9 +31,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.breezefieldsalesdemo.features.logout.presentation.api.LogoutRepositoryProvider
+import com.breeze.breezemobilearndemo.CustomStatic
 import com.breezemobilearndemo.api.LMSRepoProvider
 import com.breezemobilearndemo.api.LoginRepositoryProvider
 import com.breezemobilearndemo.databinding.ActivityDashboardBinding
@@ -251,6 +258,11 @@ class DashboardActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
                 dashView.dashToolbar.downLogoSpc.visibility = View.GONE
                 toolbarTitle.text = "Home"
             }
+            is VideoPlayLMS -> {
+                dashView.dashToolbar.ivHomeIcon.visibility = View.GONE
+                dashView.dashToolbar.addBookmark.visibility = View.VISIBLE
+                dashView.dashToolbar.logo.visibility = View.GONE
+            }
             else -> {
                 dashView.dashToolbar.ivHomeIcon.visibility = View.VISIBLE
                 dashView.dashToolbar.addBookmark.visibility = View.VISIBLE
@@ -327,6 +339,12 @@ class DashboardActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
                 .addToBackStack(tag)
         }
 
+        if(fragment is MyLearningFragment){
+            showHamburgerIcon()
+        }else{
+            showBackArrow()
+        }
+
         transaction.commitAllowingStateLoss()
 
         // Initialize Firebase if not already initialized
@@ -345,7 +363,7 @@ class DashboardActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
                 Log.d("token_firebase", "FCM Token: $token")
 
             }
-
+        CustomStatic.IsBackClick = false
         println("load_frag " + fragment.toString() + " " + Pref.user_id.toString())
     }
 
@@ -378,6 +396,7 @@ class DashboardActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
             backpressed = System.currentTimeMillis()
         }
         else if (currentFragment is VideoPlayLMS) {
+            CustomStatic.IsBackClick = true
             super.onBackPressed()
             val updatedFragment = getFragment()
             if (updatedFragment is MyLearningFragment) {
@@ -481,5 +500,35 @@ class DashboardActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
     override fun onResume() {
         super.onResume()
         toolbarTitle.text = "Home"
+    }
+
+    public fun showBackArrow() {
+        toggle.syncState()
+
+        val bitmap = BitmapFactory.decodeResource(resources, R.drawable.ic_back)
+        val scaledBitmap = Bitmap.createScaledBitmap(bitmap, 30, 30, false)
+        val scaledDrawable = BitmapDrawable(resources, scaledBitmap)
+        val colorFilter = PorterDuffColorFilter(ContextCompat.getColor(this, R.color.color_white), PorterDuff.Mode.SRC_IN)
+        scaledDrawable.colorFilter = colorFilter
+
+        dashView.dashToolbar.customToolbar.setNavigationIcon(scaledDrawable)
+        dashView.dashToolbar.customToolbar.setNavigationOnClickListener {
+            onBackPressed()
+        }
+        dashView.drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
+    }
+    public fun showHamburgerIcon() {
+        toggle = ActionBarDrawerToggle(
+            this,
+            dashView.drawer,
+            findViewById(R.id.dashToolbar),
+            R.string.openDrawer,
+            R.string.closeDrawer
+        )
+        toggle.syncState()
+        dashView.drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
+        dashView.drawer.addDrawerListener(toggle)
+        toggle.drawerArrowDrawable.color = ContextCompat.getColor(this, R.color.color_white)
+
     }
 }
