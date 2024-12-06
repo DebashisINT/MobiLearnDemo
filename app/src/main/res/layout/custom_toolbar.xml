@@ -95,7 +95,7 @@
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tv_saved_count"
                 android:layout_width="@dimen/_15sdp"
-                android:layout_height="15dp"
+                android:layout_height="18dp"
                 android:layout_gravity="right"
                 android:background="@drawable/xx"
                 android:gravity="center"
