@@ -6,6 +6,7 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import android.text.TextUtils
+import android.view.View
 import com.breezemobilearndemo.domain.LMSNotiEntity
 import com.google.firebase.messaging.FirebaseMessagingService
 import io.reactivex.android.schedulers.AndroidSchedulers

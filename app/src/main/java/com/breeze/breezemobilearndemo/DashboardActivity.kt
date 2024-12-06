@@ -48,8 +48,8 @@ import java.util.Stack
 class DashboardActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener,
     View.OnClickListener {
 
-    private var binding: ActivityDashboardBinding? = null
-    private val dashView get() = binding!!
+        var binding: ActivityDashboardBinding? = null
+    val dashView get() = binding!!
     lateinit var toolbarTitle: TextView
     private lateinit var toggle: ActionBarDrawerToggle
     private var backPressedTime: Long = 0
@@ -356,7 +356,7 @@ class DashboardActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
                 toolbarTitle.text = "Home"
             }
             dashView.dashToolbar.logo.id -> {
-                loadFrag(NotificationFragment(), NotificationFragment::class.java.name, true)
+                loadFrag(NotificationFragment(), NotificationFragment::class.java.name)
             }
             dashView.dashToolbar.addBookmark.id -> {
                 loadFrag(BookmarkFrag(), BookmarkFrag::class.java.name, true)

@@ -63,8 +63,7 @@
                 android:background="@drawable/xx"
                 android:gravity="center"
                 android:textColor="@color/white"
-                android:layout_gravity="right"
-                android:visibility="visible"/>
+                android:layout_gravity="right" />
 
         </FrameLayout>
 

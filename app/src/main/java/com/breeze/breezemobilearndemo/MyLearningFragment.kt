@@ -83,6 +83,7 @@ class MyLearningFragment : Fragment(), OnClickListener {
         }else{
             Toast.makeText(mContext, ""+getString(R.string.no_internet), Toast.LENGTH_SHORT).show()
         }
+
         Handler().postDelayed(Runnable {
             if(Pref.FirstLogiForTheDayTag){
                 Pref.FirstLogiForTheDayTag = false
@@ -120,10 +121,10 @@ class MyLearningFragment : Fragment(), OnClickListener {
         try {
             var votVIwedL = AppDatabase.getDBInstance()!!.lmsNotiDao().getNotViwed(false) as ArrayList<LMSNotiEntity>
             if(votVIwedL.size !=0){
-                (mContext as ActivityDashboardBinding).dashToolbar.tvNotiCount.visibility = View.VISIBLE
-                (mContext as ActivityDashboardBinding).dashToolbar.tvNotiCount.text = votVIwedL.size.toString()
+                (mContext as DashboardActivity).dashView.dashToolbar.tvNotiCount.visibility = View.VISIBLE
+                (mContext as DashboardActivity).dashView.dashToolbar.tvNotiCount.text = votVIwedL.size.toString()
             }else{
-                (mContext as ActivityDashboardBinding).dashToolbar.tvNotiCount.visibility = View.GONE
+                (mContext as DashboardActivity).dashView.dashToolbar.tvNotiCount.visibility = View.GONE
             }
         } catch (e: Exception) {
             e.printStackTrace()
