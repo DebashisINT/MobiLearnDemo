@@ -16,6 +16,7 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.view.WindowManager
 import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -27,7 +28,9 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
+import com.breezefieldsalesdemo.features.logout.presentation.api.LogoutRepositoryProvider
 import com.breezemobilearndemo.api.LMSRepoProvider
+import com.breezemobilearndemo.api.LoginRepositoryProvider
 import com.breezemobilearndemo.databinding.ActivityDashboardBinding
 import com.google.android.gms.tasks.Task
 import com.google.android.material.navigation.NavigationView
@@ -167,20 +170,40 @@ class DashboardActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
                     }
 
                     override fun onRightClick(editableData: String) {
-                        clearData()
-                        startActivity(
-                            Intent(
-                                this@DashboardActivity,
-                                LoginActivity::class.java
-                            )
-                        )
-                        overridePendingTransition(0, 0)
-                        finish()
+                        logoutAPICalling()
                     }
 
                 }).show(supportFragmentManager, "")
         }
 
+    }
+
+    private fun logoutAPICalling() {
+
+        val repository = LogoutRepositoryProvider.provideLogoutRepository()
+        DashboardActivity.compositeDisposable.add(
+            repository.logout(Pref.user_id!!)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe({ result ->
+                    this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING);
+                    val logoutResponse = result as BaseResponse
+
+                    if (logoutResponse.status == NetworkConstant.SUCCESS) {
+
+                        clearData()
+                        //finish()
+
+                    }
+                    else {
+                        Toast.makeText(this, getString(R.string.something_went_wrong), Toast.LENGTH_SHORT).show()
+                    }
+
+                },
+                    { error ->
+                        error.printStackTrace()
+                    })
+        )
     }
 
     fun restoreMenuItems() {
@@ -277,8 +300,6 @@ class DashboardActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
     }
 
     fun clearData() {
-        GlobalScope.launch(Dispatchers.IO) {
-            withContext(Dispatchers.Main) {
                     Pref.user_id = ""
                     Pref.session_token = ""
                     Pref.login_date = ""
@@ -289,8 +310,6 @@ class DashboardActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
                     startActivity(intent)
                     overridePendingTransition(0, 0)
                     finishAffinity()
-            }
-        }
     }
 
     fun loadFrag(fragment: Fragment, tag: String, isAdd: Boolean = false) {

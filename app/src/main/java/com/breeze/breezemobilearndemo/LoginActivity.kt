@@ -121,6 +121,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun callApi(username: String, password: String) {
+        binding!!.progressWheel.spin()
 
         if (Pref.isRememberMe) {
             Pref.PhnNo = username
@@ -143,7 +144,10 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
                 .subscribe({ result ->
                    this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING);
                     val loginResponse = result as LoginResponse
+                    binding!!.progressWheel.stopSpinning()
+
                     if (loginResponse.status == NetworkConstant.SUCCESS) {
+
                         if (Pref.temp_user_id == loginResponse.user_details!!.user_id) {
                             doAfterLoginFunctionality(loginResponse)
                         }
@@ -175,6 +179,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
 
                 },
                     { error ->
+                        binding!!.progressWheel.stopSpinning()
                         loginView.loginTV.isEnabled = true
                         error.printStackTrace()
                     })

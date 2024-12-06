@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    xmlns:wheel="http://schemas.android.com/tools"
     android:focusableInTouchMode="true"
     tools:context=".LoginActivity">
 
@@ -17,6 +18,7 @@
                 android:background="@drawable/ic_new_login_bg_new3"
                 android:orientation="vertical"
                 android:gravity="center|top">
+
 
                 <ImageView
                     android:id="@+id/logo_new"
@@ -182,7 +184,14 @@
                             android:drawablePadding="5dp"/>
 
                     </LinearLayout>
-
+                    <com.pnikosis.materialishprogress.ProgressWheel
+                        android:id="@+id/progress_wheel"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:layout_gravity="center"
+                        android:layout_centerHorizontal="true"
+                        wheel:matProg_barColor="@color/toolbar_lms"
+                        wheel:matProg_progressIndeterminate="true" />
 
                     <TextView
                         android:id="@+id/forgot_password_TV"
@@ -195,7 +204,10 @@
                         android:textSize="@dimen/_11sdp"
                         android:visibility="gone" />
 
+
                 </LinearLayout>
+
+
 
                 <Space
                     android:layout_width="match_parent"
@@ -211,11 +223,13 @@
                     android:gravity="end"
                     android:layout_gravity="end"
                     android:layout_marginEnd="@dimen/_15sdp"
-                    android:layout_marginBottom="@dimen/_40sdp"
+                    android:layout_marginBottom="@dimen/_60sdp"
                     android:textColor="@color/color_white"
                     android:textSize="@dimen/_10sdp"
                     android:fontFamily="@font/poppins_regular"
                     android:text="Version 5.0.1"/>
+
+
 
             </LinearLayout>
 

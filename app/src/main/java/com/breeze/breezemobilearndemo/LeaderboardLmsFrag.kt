@@ -48,6 +48,7 @@ import java.util.Locale
 
 
 class LeaderboardLmsFrag : Fragment(), View.OnClickListener {
+
     private lateinit var popupWindow: PopupWindow
     private lateinit var mContext:Context
     private lateinit var ll_ldr_lms_top_stick_bar: LinearLayout
@@ -465,13 +466,13 @@ class LeaderboardLmsFrag : Fragment(), View.OnClickListener {
                 ll_ldr_lms_own_pnts.visibility = View.GONE
                 ll_ldr_lms_own_no_data.visibility = View.GONE
                 tv_ldr_lms_own_pos_rank.visibility = View.GONE
-                ll_ldr_lms_rnk_all_emplye_pnts_list_hdr.visibility =View.VISIBLE
+               // ll_ldr_lms_rnk_all_emplye_pnts_list_hdr.visibility =View.VISIBLE
+                ll_ldr_lms_ovr_empty_page.visibility =View.VISIBLE
                 rv_ldr_lms_list.visibility =View.VISIBLE
                 ll_ldr_lms_thrd.visibility=View.VISIBLE
                 ll_ldr_lms_scnd.visibility=View.VISIBLE
                 iv_ldr_lms_frst_pos_outside.visibility=View.VISIBLE
                 iv_ldr_lms_frst_to_thrd_pos_badge.visibility = View.VISIBLE
-
                 iv_ldr_lms_fsrt_pos_cir_img_photo_own.visibility =View.GONE
                 iv_ldr_lms_frst_to_thrd_pos_badge_own.visibility =View.GONE
                 iv_ldr_lms_fsrt_pos_cir_img_photo.visibility =View.VISIBLE
@@ -510,6 +511,7 @@ class LeaderboardLmsFrag : Fragment(), View.OnClickListener {
                 iv_ldr_lms_fsrt_pos_cir_img_photo_own.visibility =View.VISIBLE
                 iv_ldr_lms_frst_to_thrd_pos_badge_own.visibility =View.GONE
                 iv_ldr_lms_fsrt_pos_cir_img_photo.visibility =View.GONE
+                ll_ldr_lms_ovr_empty_page.visibility =View.GONE
                 popupWindow.dismiss()
                 Glide.with(mContext)
                     .load(R.drawable.icon_pointer_gif)
@@ -769,11 +771,25 @@ class LeaderboardLmsFrag : Fragment(), View.OnClickListener {
                 .subscribe({ result ->
                     progress_wheel_frag_ldr_lms.stopSpinning()
                     if(result.status == NetworkConstant.SUCCESS){
-                        rv_ldr_lms_list.visibility = View.VISIBLE
 
-                        val subList = result.user_list.subList(3, result.user_list.size)
-                        val mLeaderBoardData = ArrayList(subList)
+                        ll_ldr_lms_head.visibility =View.VISIBLE
 
+                        if (result.user_list.size>2) {
+                            rv_ldr_lms_list.visibility = View.VISIBLE
+                            ll_ldr_lms_rnk_all_emplye_pnts_list_hdr.visibility =View.VISIBLE
+                        }
+
+                        lateinit var subList: MutableList<LMSOverallUserListData>
+                        lateinit var mLeaderBoardData: ArrayList<LMSOverallUserListData>
+
+                        if (result.user_list.size == 1){
+                            subList = result.user_list.subList(2, result.user_list.size)
+                            mLeaderBoardData = ArrayList(subList)
+                        }else{
+                            subList = result.user_list.subList(3, result.user_list.size)
+                            mLeaderBoardData = ArrayList(subList)
+                        }
+                        
                         if (result.user_list.size>0) {
                             Glide.with(mContext)
                                 .load(result.user_list.get(0).profile_pictures_url)
@@ -797,7 +813,7 @@ class LeaderboardLmsFrag : Fragment(), View.OnClickListener {
                             tv_ldr_lms_frst_to_thrd_pos_name.text = "NA"
                             tv_ldr_lms_frst_to_thrd_pos_pnts.text = "NA"
                         }
-                        if (result.user_list.size>0) {
+                        if (result.user_list.size>0 && result.user_list.size>=1) {
                             Glide.with(mContext)
                                 .load(result.user_list.get(1).profile_pictures_url)
                                 .apply(
@@ -818,7 +834,7 @@ class LeaderboardLmsFrag : Fragment(), View.OnClickListener {
                             tv_ldr_lms_scnd_pos_name.text = "NA"
                             tv_ldr_lms_scnd_pos_pnts.text = "NA"
                         }
-                        if (result.user_list.size>0) {
+                        if (result.user_list.size>0 && result.user_list.size>=2) {
                             Glide.with(mContext)
                                 .load(result.user_list.get(2).profile_pictures_url)
                                 .apply(
@@ -840,6 +856,7 @@ class LeaderboardLmsFrag : Fragment(), View.OnClickListener {
                             tv_ldr_lms_thrd_pos_name.text = "NA"
                             tv_ldr_lms_thrd_pos_pnts.text = "NA"
                         }
+
                         mLeaderBoardAdapter = LMSLeaderBoardAdapter(mLeaderBoardData as ArrayList<LMSOverallUserListData>,mContext)
                         rv_ldr_lms_list.layoutManager = LinearLayoutManager(context)
                         rv_ldr_lms_list.setHasFixedSize(true)
@@ -852,7 +869,8 @@ class LeaderboardLmsFrag : Fragment(), View.OnClickListener {
                         rv_ldr_lms_list.visibility = View.GONE
                         ll_ldr_lms_rnk_all_emplye_pnts_list_hdr.visibility = View.GONE
                         ll_ldr_lms_head.visibility = View.GONE
-                        ll_ldr_lms_ovr_empty_page.visibility = View.VISIBLE
+                        ll_ldr_lms_ovr_empty_page.visibility = View.GONE
+                        ll_ldr_lms_head.visibility =View.GONE
                         Toast.makeText(mContext, result.message.toString(), Toast.LENGTH_SHORT).show()
                     }
                 }, { error ->
@@ -892,6 +910,9 @@ class LeaderboardLmsFrag : Fragment(), View.OnClickListener {
                             Glide.with(mContext)
                                 .load(R.drawable.icon_pointer_gif)
                                 .into(iv_ldr_lms_hand_anim)
+
+                            ll_ldr_lms_head.visibility =View.VISIBLE
+                            ll_ldr_lms_own_no_data.visibility =View.GONE
 
                             if (result.position != null || result.position == 0) {
                                 tv_ldr_lms_own_pos_rank.text = "#" + result.position.toString()
@@ -969,7 +990,7 @@ class LeaderboardLmsFrag : Fragment(), View.OnClickListener {
                             tv_ldr_lms_own_pos_rank.text ="NA"
                             tv_ldr_lms_frst_to_thrd_pos_name.text = Pref.user_name.toString()
                             iv_ldr_lms_hand_anim.visibility = View.VISIBLE
-
+                            ll_ldr_lms_head.visibility =View.GONE
                         }
                     },1000)
                     Handler().postDelayed(Runnable {
@@ -1164,6 +1185,7 @@ class LeaderboardLmsFrag : Fragment(), View.OnClickListener {
         dialog_yes_no_headerTV.text = "Hi "+Pref.user_name!!+"!"
         val dialogYes = simpleDialog.findViewById(R.id.tv_dialog_yes_no_yes) as AppCompatTextView
         dialogYes.setOnClickListener({ view ->
+            ll_ldr_lms_top_stick_bar.setBackgroundColor(Color.parseColor("#3d30d7"))
             simpleDialog.cancel()
         })
         simpleDialog.show()
