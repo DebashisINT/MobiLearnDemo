@@ -114,6 +114,7 @@ class MyLearningFragment : Fragment(), OnClickListener {
 
     override fun onResume() {
         super.onResume()
+        (mContext as DashboardActivity).showHamburgerIcon()
         println("tag_lf MyLearningFragment onResume")
         (mContext as DashboardActivity).toolbarTitle.text = "Home"
         try {
