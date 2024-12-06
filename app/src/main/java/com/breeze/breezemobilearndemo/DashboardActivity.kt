@@ -296,7 +296,6 @@ class DashboardActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
                     Pref.user_id = ""
                     Pref.session_token = ""
                     Pref.login_date = ""
-                    Pref.pwd = ""
                     Pref.login_time = ""
 
                     val intent = Intent(this@DashboardActivity, LoginActivity::class.java)

@@ -369,7 +369,9 @@ class MyLearningFragment : Fragment(), OnClickListener {
                             if(response.topic_list != null){
                                 try {
                                     var filterL =response.topic_list.filter { it.topic_parcentage != 100 }
-                                    getVideoTopicWise(filterL.get(0))
+                                    if (filterL.size>0) {
+                                        getVideoTopicWise(filterL.get(0))
+                                    }
 
                                 }catch (e:Exception){
                                     e.printStackTrace()
