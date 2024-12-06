@@ -94,7 +94,7 @@ class MyLearningFragment : Fragment(), OnClickListener {
                     Pref.videoCompleteCount = "0"
                     Handler().postDelayed(Runnable {
                         setHomeClickFalse()
-                        (mContext as DashboardActivity).loadFrag(VideoPlayLMS.getInstance(Pref.LastVideoPlay_TopicID +"~"+ Pref.LastVideoPlay_TopicName),VideoPlayLMS::class.java.name, true)
+                        (mContext as DashboardActivity).loadFrag(VideoPlayLMS.getInstance(Pref.LastVideoPlay_TopicID +"~"+ Pref.LastVideoPlay_TopicName),VideoPlayLMS::class.java.name)
                     }, 1000)
                 }else{
                     Handler().postDelayed(Runnable {
@@ -415,7 +415,7 @@ class MyLearningFragment : Fragment(), OnClickListener {
                                     Pref.videoCompleteCount = "0"
                                     Handler().postDelayed(Runnable {
                                         setHomeClickFalse()
-                                        (mContext as DashboardActivity).loadFrag(VideoPlayLMS.getInstance(topicList.topic_id.toString()+"~"+topicList.topic_name),VideoPlayLMS::class.java.name, true )
+                                        (mContext as DashboardActivity).loadFrag(VideoPlayLMS.getInstance(topicList.topic_id.toString()+"~"+topicList.topic_name),VideoPlayLMS::class.java.name )
                                     }, 500)
                                 } else {
                                     Toast.makeText(mContext, "No video found", Toast.LENGTH_SHORT)
@@ -477,7 +477,7 @@ class MyLearningFragment : Fragment(), OnClickListener {
                 VideoPlayLMS.loadedFrom = "LMSDASHBOARD"
                 CustomStatic.VideoPosition = Pref.LastVideoPlay_VidPosition.toInt()
                 Pref.videoCompleteCount = "0"
-                (mContext as DashboardActivity).loadFrag(VideoPlayLMS.getInstance(Pref.LastVideoPlay_TopicID +"~"+ Pref.LastVideoPlay_TopicName),VideoPlayLMS::class.java.name, true)
+                (mContext as DashboardActivity).loadFrag(VideoPlayLMS.getInstance(Pref.LastVideoPlay_TopicID +"~"+ Pref.LastVideoPlay_TopicName),VideoPlayLMS::class.java.name)
             }
         } catch (e: Exception) {
             e.printStackTrace()
