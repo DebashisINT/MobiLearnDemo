@@ -95,15 +95,17 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
 
         when (v?.id) {
             loginView.loginTV.id -> {
-
+                binding!!.progressWheel.spin()
                 try {
                     var usrStr = loginView.usernameEDT.text.toString()
                     var passStr = loginView.passwordEDT.text.toString()
                     if(usrStr.length == 0){
+                        binding!!.progressWheel.stopSpinning()
                         Toast.makeText(this, "Enter username", Toast.LENGTH_SHORT).show()
                         loginView.usernameEDT.requestFocus()
                         return
                     }else if(passStr.length == 0){
+                        binding!!.progressWheel.stopSpinning()
                         Toast.makeText(this, "Enter password", Toast.LENGTH_SHORT).show()
                         loginView.passwordEDT.requestFocus()
                         return
@@ -121,7 +123,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun callApi(username: String, password: String) {
-        binding!!.progressWheel.spin()
+
 
         if (Pref.isRememberMe) {
             Pref.PhnNo = username
