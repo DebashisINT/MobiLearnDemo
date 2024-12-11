@@ -240,7 +240,7 @@ class SearchLmsFrag : Fragment() , View.OnClickListener, LmsSearchAdapter.OnItem
                 }
             }
 
-            searchLmsFragView.llFragSearch .id ->{
+            searchLmsFragView.ivFragSearchVoice .id ->{
                 suffixText = searchLmsFragView.etFragSearch.text.toString().trim()
                 startVoiceInput()
             }

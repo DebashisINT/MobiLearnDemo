@@ -35,4 +35,8 @@ interface LMSNotiDao {
 
     @Query("select *  from lms_notification where isViwed =:isViwed")
     fun getNotViwed(isViwed:Boolean):List<LMSNotiEntity>
+
+    // New method to count unread notifications
+    @Query("SELECT COUNT(*) FROM lms_notification WHERE isViwed = 0")
+    fun getUnreadNotificationCount(): Int
 }

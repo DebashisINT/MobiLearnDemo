@@ -213,11 +213,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
                 <TextView
+                    android:id="@+id/tv_headbranch"
                     android:singleLine="true"
                     android:ellipsize="end"
                     android:paddingTop="@dimen/_5sdp"
                     android:paddingStart="@dimen/_10sdp"
-                    android:id="@+id/tv_headbranch"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@color/transparent"

@@ -127,7 +127,7 @@ class AllTopicsWiseContents : Fragment(), OnClickListener , MyLearningProgressAd
             if(topic_id.equals("")){
                 topic_id = CustomStatic.TOPIC_SEL
             }
-            alltopicsWiseContentView.progressWheel.visibility = View.VISIBLE
+            alltopicsWiseContentView.progressWheel.spin()
             val repository = LMSRepoProvider.getTopicList()
             DashboardActivity.compositeDisposable.add(
                 repository.getTopicsWiseVideo(Pref.user_id!!, topic_id)
@@ -136,7 +136,7 @@ class AllTopicsWiseContents : Fragment(), OnClickListener , MyLearningProgressAd
                     .subscribe({ result ->
                         val response = result as VideoTopicWiseResponse
                         if (response.status == NetworkConstant.SUCCESS) {
-                            alltopicsWiseContentView.progressWheel.visibility = View.GONE
+                            alltopicsWiseContentView.progressWheel.stopSpinning()
                             try {
                                 if (response.content_list != null && response.content_list.size > 0) {
                                     var temp = response.content_list.distinctBy { it.content_id.toString() }
@@ -155,18 +155,18 @@ class AllTopicsWiseContents : Fragment(), OnClickListener , MyLearningProgressAd
                                 ex.printStackTrace()
                             }
                         } else {
-                            alltopicsWiseContentView.progressWheel.visibility = View.GONE
+                            alltopicsWiseContentView.progressWheel.stopSpinning()
                             Toast.makeText(mContext, getString(R.string.no_data_found), Toast.LENGTH_SHORT).show()
 
                         }
                     }, { error ->
-                        alltopicsWiseContentView.progressWheel.visibility = View.GONE
+                        alltopicsWiseContentView.progressWheel.stopSpinning()
                         Toast.makeText(mContext, getString(R.string.something_went_wrong), Toast.LENGTH_SHORT).show()
                     })
             )
         } catch (ex: Exception) {
             ex.printStackTrace()
-            alltopicsWiseContentView.progressWheel.visibility = View.GONE
+            alltopicsWiseContentView.progressWheel.stopSpinning()
             Toast.makeText(mContext, getString(R.string.something_went_wrong), Toast.LENGTH_SHORT).show()
         }
     }
@@ -182,7 +182,7 @@ class AllTopicsWiseContents : Fragment(), OnClickListener , MyLearningProgressAd
 
         if (content_idListSize>0){
             try {
-                alltopicsWiseContentView.progressWheel.visibility = View.VISIBLE
+                alltopicsWiseContentView.progressWheel.spin()
                 val repository = LMSRepoProvider.getTopicList()
                 DashboardActivity.compositeDisposable.add(
                     repository.getTopicContentWiseAnswerLists(Pref.user_id!!,
@@ -192,13 +192,12 @@ class AllTopicsWiseContents : Fragment(), OnClickListener , MyLearningProgressAd
                         .subscribe({ result ->
                             val response = result as TopicContentWiseAnswerListsFetchResponse
                             if (response.status == NetworkConstant.SUCCESS) {
-                                alltopicsWiseContentView.progressWheel.visibility = View.GONE
+                                alltopicsWiseContentView.progressWheel.stopSpinning()
 
                                 try {
                                     var content_Id = response.content_id
                                     for (i in 0.. response.question_answer_fetch_list.size-1){
                                         contentWiseAnswerL.add(ContentWiseAnswerL(content_Id,response.question_answer_fetch_list.get(i).isCorrectAnswer))
-
                                     }
 
                                 } catch (ex: Exception) {
@@ -210,18 +209,18 @@ class AllTopicsWiseContents : Fragment(), OnClickListener , MyLearningProgressAd
                                 getTopicContentWiseAnswerListsAPICalling()
 
                             } else {
-                                alltopicsWiseContentView.progressWheel.visibility = View.GONE
-                                Toast.makeText(mContext, getString(R.string.no_data_found), Toast.LENGTH_SHORT).show()
+                                alltopicsWiseContentView.progressWheel.stopSpinning()
+                                Toast.makeText(mContext, response.message, Toast.LENGTH_SHORT).show()
 
                             }
                         }, { error ->
-                            alltopicsWiseContentView.progressWheel.visibility = View.GONE
+                            alltopicsWiseContentView.progressWheel.stopSpinning()
                             Toast.makeText(mContext, getString(R.string.something_went_wrong), Toast.LENGTH_SHORT).show()
                         })
                 )
             } catch (ex: Exception) {
                 ex.printStackTrace()
-                alltopicsWiseContentView.progressWheel.visibility = View.GONE
+                alltopicsWiseContentView.progressWheel.stopSpinning()
                 Toast.makeText(mContext, getString(R.string.something_went_wrong), Toast.LENGTH_SHORT).show()
             }
         }

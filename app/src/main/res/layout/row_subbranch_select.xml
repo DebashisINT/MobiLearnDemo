@@ -19,6 +19,7 @@
             android:paddingLeft="@dimen/_10sdp"
             android:id="@+id/cb_row_subBranch_sel_name"
             android:layout_width="match_parent"
+            android:textColor="@color/black"
             android:fontFamily="@font/poppins_regular"
             android:layout_height="@dimen/_30sdp"/>
 

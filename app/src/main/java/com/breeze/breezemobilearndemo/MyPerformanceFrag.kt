@@ -33,7 +33,7 @@ class MyPerformanceFrag : Fragment(), View.OnClickListener {
     private lateinit var averageTimeString: String
     private lateinit var totalTimeString1: String
     private lateinit var averageTimeString1: String
-    lateinit var courseList: List<LmsSearchData>
+    var courseList: List<LmsSearchData> =ArrayList<LmsSearchData>()
     var str_filtertopicID: String=""
     var str_filtertopicname: String=""
     var str_filtertopicParcentage: Int=0

@@ -458,7 +458,7 @@ class LeaderboardLmsFrag : Fragment(), View.OnClickListener {
                 setToolbar()
                 tv_ldr_lms_ovr.setBackgroundResource(R.drawable.attached_image_rounded_bg)
                 tv_ldr_lms_own.setBackgroundResource(0)
-                ll_ldr_lms_top_stick_bar.setBackgroundColor(Color.parseColor("#3d30d7"));
+                //ll_ldr_lms_top_stick_bar.setBackgroundColor(Color.parseColor("#3d30d7"));
                 context?.getColor(R.color.white)?.let { tv_ldr_lms_ovr.setTextColor(it) }
                 context?.getColor(R.color.black)?.let { tv_ldr_lms_own.setTextColor(it) }
                 (mContext as DashboardActivity).toolbarTitle.text = "Learners Leaderboard"
@@ -468,6 +468,7 @@ class LeaderboardLmsFrag : Fragment(), View.OnClickListener {
                 tv_ldr_lms_own_pos_rank.visibility = View.GONE
                // ll_ldr_lms_rnk_all_emplye_pnts_list_hdr.visibility =View.VISIBLE
                 ll_ldr_lms_ovr_empty_page.visibility =View.VISIBLE
+                ll_ldr_lms_top_stick_bar.setBackgroundColor(Color.parseColor("#dde7f1"))
                 rv_ldr_lms_list.visibility =View.VISIBLE
                 ll_ldr_lms_thrd.visibility=View.VISIBLE
                 ll_ldr_lms_scnd.visibility=View.VISIBLE
@@ -479,6 +480,7 @@ class LeaderboardLmsFrag : Fragment(), View.OnClickListener {
 
                 if (!str_filterSubBranchID.equals("") || isFromManuOwn == true) {
                     overAllAPI()
+                    ll_ldr_lms_top_stick_bar.setBackgroundColor(Color.parseColor("#3d30d7"))
                     ll_ldr_lms_ovr_empty_page.visibility = View.GONE
                 }
                 else{
@@ -493,7 +495,7 @@ class LeaderboardLmsFrag : Fragment(), View.OnClickListener {
                 isOverallOwnSelected = false
                 setToolbar()
                 tv_ldr_lms_own.setBackgroundResource(R.drawable.attached_image_rounded_bg)
-                ll_ldr_lms_top_stick_bar.setBackgroundColor(Color.parseColor("#3d30d7"));
+                //ll_ldr_lms_top_stick_bar.setBackgroundColor(Color.parseColor("#3d30d7"));
                 tv_ldr_lms_ovr.setBackgroundResource(0)
                 context?.getColor(R.color.white)?.let { tv_ldr_lms_own.setTextColor(it) }
                 context?.getColor(R.color.black)?.let { tv_ldr_lms_ovr.setTextColor(it) }
@@ -512,6 +514,7 @@ class LeaderboardLmsFrag : Fragment(), View.OnClickListener {
                 iv_ldr_lms_frst_to_thrd_pos_badge_own.visibility =View.GONE
                 iv_ldr_lms_fsrt_pos_cir_img_photo.visibility =View.GONE
                 ll_ldr_lms_ovr_empty_page.visibility =View.GONE
+                ll_ldr_lms_top_stick_bar.setBackgroundColor(Color.parseColor("#3d30d7"))
                 popupWindow.dismiss()
                 Glide.with(mContext)
                     .load(R.drawable.icon_pointer_gif)
@@ -520,11 +523,13 @@ class LeaderboardLmsFrag : Fragment(), View.OnClickListener {
                 if (!str_filterSubBranchID.equals("") || isFromManuOwn == true) {
                     ownAPI()
                     ll_ldr_lms_own_no_data.visibility = View.GONE
+                    ll_ldr_lms_top_stick_bar.setBackgroundColor(Color.parseColor("#3d30d7"))
                     iv_ldr_lms_hand_anim.visibility = View.GONE
                 }
                 else{
                     ll_ldr_lms_own_pnts.visibility =View.GONE
                     ll_ldr_lms_own_no_data.visibility = View.VISIBLE
+                    ll_ldr_lms_top_stick_bar.setBackgroundColor(Color.parseColor("#dde7f1"))
                     iv_ldr_lms_hand_anim.visibility = View.VISIBLE
 
                     Glide.with(mContext)
@@ -584,7 +589,7 @@ class LeaderboardLmsFrag : Fragment(), View.OnClickListener {
                             ownAPI()
                         }
                         else{
-                            ll_ldr_lms_top_stick_bar.setBackgroundColor(Color.parseColor("#dde7f1"));
+                           // ll_ldr_lms_top_stick_bar.setBackgroundColor(Color.parseColor("#dde7f1"));
 
                             showNoDataDialog()
                         }
@@ -594,7 +599,7 @@ class LeaderboardLmsFrag : Fragment(), View.OnClickListener {
                             overAllAPI()
                         }
                         else{
-                            ll_ldr_lms_top_stick_bar.setBackgroundColor(Color.parseColor("#dde7f1"));
+                           // ll_ldr_lms_top_stick_bar.setBackgroundColor(Color.parseColor("#dde7f1"));
 
                             showNoDataDialog()
                         }
@@ -704,7 +709,7 @@ class LeaderboardLmsFrag : Fragment(), View.OnClickListener {
                         if (subBranch_list.size > 0) {
                             getSubBranchList(tv_subBranch, subBranch_list)
                         } else {
-                            ll_ldr_lms_top_stick_bar.setBackgroundColor(Color.parseColor("#dde7f1"));
+                            //ll_ldr_lms_top_stick_bar.setBackgroundColor(Color.parseColor("#dde7f1"));
 
                             showNoDataDialog()
                         }
@@ -864,12 +869,14 @@ class LeaderboardLmsFrag : Fragment(), View.OnClickListener {
                         mLeaderBoardAdapter.notifyDataSetChanged()
                         tv_ldr_lms_employee_cnt.text = "All Employees("+result.user_list.size.toString()+")"
                         ll_ldr_lms_ovr_empty_page.visibility = View.GONE
+                        ll_ldr_lms_top_stick_bar.setBackgroundColor(Color.parseColor("#3d30d7"))
 
                     }else{
                         rv_ldr_lms_list.visibility = View.GONE
                         ll_ldr_lms_rnk_all_emplye_pnts_list_hdr.visibility = View.GONE
                         ll_ldr_lms_head.visibility = View.GONE
                         ll_ldr_lms_ovr_empty_page.visibility = View.GONE
+                        ll_ldr_lms_top_stick_bar.setBackgroundColor(Color.parseColor("#3d30d7"))
                         ll_ldr_lms_head.visibility =View.GONE
                         Toast.makeText(mContext, result.message.toString(), Toast.LENGTH_SHORT).show()
                     }
@@ -900,7 +907,7 @@ class LeaderboardLmsFrag : Fragment(), View.OnClickListener {
                             ll_ldr_lms_own_pnts.visibility = View.VISIBLE
                             tv_ldr_lms_frst_to_thrd_pos_name.text = Pref.user_name
                             tv_ldr_lms_frst_to_thrd_pos_name.setTextSize(TypedValue.COMPLEX_UNIT_SP, 17F)
-                            iv_ldr_lms_hand_anim.visibility = View.VISIBLE
+                           // iv_ldr_lms_hand_anim.visibility = View.VISIBLE
                             tv_ldr_lms_own_pos_rank.visibility = View.VISIBLE
                             iv_ldr_lms_frst_to_thrd_pos_badge.visibility = View.GONE
                             iv_ldr_lms_fsrt_pos_cir_img_photo_own.visibility =View.VISIBLE
@@ -913,6 +920,7 @@ class LeaderboardLmsFrag : Fragment(), View.OnClickListener {
 
                             ll_ldr_lms_head.visibility =View.VISIBLE
                             ll_ldr_lms_own_no_data.visibility =View.GONE
+                            ll_ldr_lms_top_stick_bar.setBackgroundColor(Color.parseColor("#3d30d7"))
 
                             if (result.position != null || result.position == 0) {
                                 tv_ldr_lms_own_pos_rank.text = "#" + result.position.toString()
@@ -970,6 +978,8 @@ class LeaderboardLmsFrag : Fragment(), View.OnClickListener {
                                 ll_ldr_lms_own_pnts.visibility = View.GONE
                                 iv_ldr_lms_frst_to_thrd_pos_badge_own.visibility = View.GONE
                                 ll_ldr_lms_own_no_data.visibility = View.VISIBLE
+                                ll_ldr_lms_top_stick_bar.setBackgroundColor(Color.parseColor("#dde7f1"))
+
                                 iv_ldr_lms_fsrt_pos_cir_img_photo_own.visibility =View.VISIBLE
                                 tv_ldr_lms_own_pos_rank.visibility =View.GONE
                                 iv_ldr_lms_frst_to_thrd_pos_badge_own.visibility =View.GONE
@@ -983,6 +993,7 @@ class LeaderboardLmsFrag : Fragment(), View.OnClickListener {
                                 Toast.makeText(mContext, result.message.toString(), Toast.LENGTH_SHORT).show()
                             }
                             ll_ldr_lms_own_no_data.visibility = View.VISIBLE
+                            ll_ldr_lms_top_stick_bar.setBackgroundColor(Color.parseColor("#dde7f1"))
                             // iv_ownimg2.visibility =View.VISIBLE
                             iv_ldr_lms_frst_to_thrd_pos_badge_own.visibility = View.VISIBLE
                             iv_ldr_lms_frst_to_thrd_pos_badge_own.visibility = View.GONE
@@ -1022,6 +1033,19 @@ class LeaderboardLmsFrag : Fragment(), View.OnClickListener {
                         tv_headbranch.text = respBranchData.branch_list.get(0).branch_head
                         str_filterBranchID = respBranchData.branch_list.get(0).branch_head_id.toString()
                         respBranchData.branch_list.get(0).sub_branch.get(0).id.toString()
+
+
+                        mFilterbranchData = respBranchData.branch_list.clone() as ArrayList<BranchData>
+                        subBranchList =mFilterbranchData.filter { it.branch_head_id == str_filterBranchID.toInt() } as ArrayList<BranchData>
+                        for(i in 0..subBranchList.size-1){
+                            subBranch_list = subBranchList.get(i).sub_branch
+                            if (subBranch_list.size > 0) {
+
+                            }else{
+                                tv_subBranch.text = ""
+                                str_filterSubBranchID=""
+                            }
+                        }
 
                     }else{
                         tv_headbranch.text=""
@@ -1174,6 +1198,21 @@ class LeaderboardLmsFrag : Fragment(), View.OnClickListener {
     }
 
     private fun showNoDataDialog() {
+
+        // Get the current background color
+        val currentColor = (ll_ldr_lms_top_stick_bar.background as ColorDrawable).color
+        var color1 = Color.parseColor("#3d30d7")
+        var color2 = Color.parseColor("#dde7f1")
+        // Compare and set the background color
+        if (currentColor == Color.parseColor("#3d30d7")) {
+            ll_ldr_lms_top_stick_bar.setBackgroundColor(Color.parseColor("#3d30d7"))
+        }
+
+        if (currentColor == Color.parseColor("#dde7f1")) {
+            ll_ldr_lms_top_stick_bar.setBackgroundColor(Color.parseColor("#dde7f1"))
+        }
+
+
         val simpleDialog = Dialog(mContext)
         simpleDialog.setCancelable(true)
         simpleDialog.setCanceledOnTouchOutside(false)
@@ -1185,7 +1224,16 @@ class LeaderboardLmsFrag : Fragment(), View.OnClickListener {
         dialog_yes_no_headerTV.text = "Hi "+Pref.user_name!!+"!"
         val dialogYes = simpleDialog.findViewById(R.id.tv_dialog_yes_no_yes) as AppCompatTextView
         dialogYes.setOnClickListener({ view ->
-            ll_ldr_lms_top_stick_bar.setBackgroundColor(Color.parseColor("#3d30d7"))
+            //ll_ldr_lms_top_stick_bar.setBackgroundColor(Color.parseColor("#3d30d7"))
+
+            if (currentColor == Color.parseColor("#3d30d7")) {
+                ll_ldr_lms_top_stick_bar.setBackgroundColor(Color.parseColor("#3d30d7"))
+            }
+
+            if (currentColor == Color.parseColor("#dde7f1")) {
+                ll_ldr_lms_top_stick_bar.setBackgroundColor(Color.parseColor("#dde7f1"))
+            }
+
             simpleDialog.cancel()
         })
         simpleDialog.show()

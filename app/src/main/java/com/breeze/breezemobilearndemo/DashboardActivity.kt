@@ -2,7 +2,10 @@ package com.breezemobilearndemo
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.ActivityNotFoundException
+import android.content.BroadcastReceiver
+import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.content.pm.ActivityInfo
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -18,6 +21,7 @@ import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.view.WindowManager
+import android.view.animation.AnimationUtils
 import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -30,6 +34,7 @@ import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.breezefieldsalesdemo.features.logout.presentation.api.LogoutRepositoryProvider
 import com.breeze.breezemobilearndemo.CustomStatic
 import com.breezemobilearndemo.api.LMSRepoProvider
@@ -71,7 +76,21 @@ class DashboardActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
         window.setStatusBarColor(ContextCompat.getColor(this, R.color.toolbar_lms))
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         initView()
-    }
+
+        if (intent != null && intent.extras != null) {
+            if (intent.getStringExtra("TYPE")
+                    .equals("lms_content_assign", ignoreCase = true)
+            ) {
+                Handler().postDelayed(Runnable {
+                                                loadFrag(NotificationFragment(), NotificationFragment::class.java.name , false)
+                                               }, 500)
+            }
+        }
+
+        LocalBroadcastManager.getInstance(this)
+            .registerReceiver(fcmReceiver, IntentFilter("FCM_ACTION_RECEIVER"))
+
+        }
 
     private fun initView() {
         toggle = ActionBarDrawerToggle(
@@ -209,7 +228,6 @@ class DashboardActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
         }
     }
 
-
     fun filterMenuItems(query: String) {
 
         for (i in 0 until dashView.navView.menu.size()) {
@@ -228,7 +246,6 @@ class DashboardActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
         }
     }
 
-
     private fun handleToolbarVisibility() {
         val currentFragment = supportFragmentManager.findFragmentById(dashView.fragContainerView.id)
         when (currentFragment) {
@@ -243,12 +260,14 @@ class DashboardActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
                 dashView.dashToolbar.ivHomeIcon.visibility = View.GONE
                 dashView.dashToolbar.addBookmark.visibility = View.VISIBLE
                 dashView.dashToolbar.logo.visibility = View.GONE
+                dashView.dashToolbar.tvNotiCount.visibility = View.GONE
             }
             else -> {
                 dashView.dashToolbar.ivHomeIcon.visibility = View.VISIBLE
                 dashView.dashToolbar.addBookmark.visibility = View.VISIBLE
                 dashView.dashToolbar.logo.visibility = View.GONE
                 dashView.dashToolbar.upLogoSpc.visibility = View.GONE
+                dashView.dashToolbar.tvNotiCount.visibility = View.GONE
             }
         }
     }
@@ -256,32 +275,32 @@ class DashboardActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.menu_home -> {
-                loadFrag(MyLearningFragment(), MyLearningFragment::class.java.name,isAdd = true)
+                loadFrag(MyLearningFragment(), MyLearningFragment::class.java.name,isAdd = false)
                 dashView.dashToolbar.ivHomeIcon.visibility = View.GONE
                 toolbarTitle.text = "Home"
             }
 
             R.id.menu_lms_dashboard -> {
-                loadFrag(MyLearningFragment(), MyLearningFragment::class.java.name,isAdd = true)
+                loadFrag(MyLearningFragment(), MyLearningFragment::class.java.name,isAdd = false)
                 dashView.dashToolbar.ivHomeIcon.visibility = View.GONE
                 toolbarTitle.text = "Home"
             }
 
             R.id.menu_my_learning -> {
-                loadFrag(MyLearningTopicList(), MyLearningTopicList::class.java.name,isAdd = true)
+                loadFrag(MyLearningTopicList(), MyLearningTopicList::class.java.name,isAdd = false)
             }
 
             R.id.menu_all_topics -> {
-                loadFrag(SearchLmsKnowledgeFrag(), SearchLmsKnowledgeFrag::class.java.name,isAdd = true)
+                loadFrag(SearchLmsKnowledgeFrag(), SearchLmsKnowledgeFrag::class.java.name,isAdd = false)
             }
             R.id.menu_my_topics -> {
-                loadFrag(SearchLmsFrag(), SearchLmsFrag::class.java.name,isAdd = true)
+                loadFrag(SearchLmsFrag(), SearchLmsFrag::class.java.name,isAdd = false)
             }
             R.id.menu_my_performance -> {
-                loadFrag(MyPerformanceFrag(), MyPerformanceFrag::class.java.name,isAdd = true)
+                loadFrag(MyPerformanceFrag(), MyPerformanceFrag::class.java.name,isAdd = false)
             }
             R.id.menu_leaderboard -> {
-                loadFrag(LeaderboardLmsFrag(), LeaderboardLmsFrag::class.java.name,isAdd = true)
+                loadFrag(LeaderboardLmsFrag(), LeaderboardLmsFrag::class.java.name,isAdd = false)
             }
 
             R.id.menu_privacy_policy -> {
@@ -400,7 +419,6 @@ class DashboardActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
         }
     }
 
-
     fun getFragment(): Fragment? {
         return supportFragmentManager.findFragmentById(dashView.fragContainerView.id)
     }
@@ -409,6 +427,18 @@ class DashboardActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
         super.onDestroy()
         compositeDisposable.clear()
         binding = null
+    }
+
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        if (intent == null || intent.extras == null)
+            return
+
+        if (intent.getStringExtra("TYPE")
+                .equals("lms_content_assign", ignoreCase = true)
+        ) {
+            loadFrag(NotificationFragment(), NotificationFragment::class.java.name , false)
+        }
     }
 
     fun updateBookmarkCnt() {
@@ -465,6 +495,16 @@ class DashboardActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
                     ex.printStackTrace()
                 }
             }
+            else{
+
+                if (intent.getStringExtra("TYPE")
+                        .equals("lms_content_assign", ignoreCase = true)
+                ) {
+                    (getFragment() as VideoPlayLMS).onPause()
+                    (getFragment() as VideoPlayLMS).onStop()
+                    loadFrag(NotificationFragment(), NotificationFragment::class.java.name , false)
+                }
+            }
         }
     }
 
@@ -479,6 +519,7 @@ class DashboardActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
     }
     override fun onResume() {
         super.onResume()
+        updateNotificationCount() // Refresh the notification count when the activity is resumed
         toolbarTitle.text = "Home"
     }
 
@@ -497,6 +538,7 @@ class DashboardActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
         }
         dashView.drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
     }
+
     public fun showHamburgerIcon() {
         toggle = ActionBarDrawerToggle(
             this,
@@ -511,4 +553,26 @@ class DashboardActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
         toggle.drawerArrowDrawable.color = ContextCompat.getColor(this, R.color.color_white)
 
     }
+
+    private val fcmReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context, intent: Intent) {
+            dashView.dashToolbar.logo.startAnimation(AnimationUtils.loadAnimation(context, R.anim.shake))
+            updateNotificationCount()
+        }
+    }
+
+    fun updateNotificationCount() {
+        val notificationCount = fetchNotificationCount() // Get the count from the database
+        if (notificationCount >0) {
+            dashView.dashToolbar.tvNotiCount.visibility = View.VISIBLE
+            dashView.dashToolbar.tvNotiCount.text =
+                notificationCount.toString() // Update the TextView
+        }
+    }
+    private fun fetchNotificationCount(): Int {
+        return AppDatabase.getDBInstance()!!.lmsNotiDao().getUnreadNotificationCount()
+    }
 }
+
+
+

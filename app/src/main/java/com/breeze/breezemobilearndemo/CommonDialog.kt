@@ -221,10 +221,9 @@ class CommonDialog : DialogFragment(), View.OnClickListener {
     override fun onClick(p0: View?) {
         when (p0!!.id) {
             R.id.cancel_TV -> {
-                if (Pref.IsUserWiseLMSFeatureOnly){
-                    dismiss()
-                    return
-                }
+                dismiss()
+                return
+
                 if (!mIsCancelable)
                     mListener.onLeftClick()
                 dismiss()

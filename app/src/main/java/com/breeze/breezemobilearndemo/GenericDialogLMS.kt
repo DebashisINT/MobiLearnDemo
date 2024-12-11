@@ -11,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.Window
 import android.widget.ImageView
+import androidx.appcompat.widget.AppCompatEditText
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -22,7 +23,7 @@ class GenericDialogLMS: DialogFragment() {
     private lateinit var close: ImageView
     private lateinit var rv_list: RecyclerView
     private  var adapter: AdapterGenericDialogLMS? = null
-    private lateinit  var et_search: AppCompatTextView
+    private lateinit  var et_search: AppCompatEditText
     private lateinit var mContext: Context
 
     override fun onAttach(context: Context) {
@@ -65,6 +66,11 @@ class GenericDialogLMS: DialogFragment() {
     }
 
     private fun initView(v: View){
+
+        header=v!!.findViewById(R.id.tv_dialog_generic_list_header)
+        close=v!!.findViewById(R.id.iv_dialog_generic_list_close_icon)
+        rv_list=v!!.findViewById(R.id.rv_dialog_generic_list)
+        et_search=v!!.findViewById(R.id.et_dialog_generic_search)
 
         header.text="Select $headerStr"
         rv_list.layoutManager = LinearLayoutManager(mContext)

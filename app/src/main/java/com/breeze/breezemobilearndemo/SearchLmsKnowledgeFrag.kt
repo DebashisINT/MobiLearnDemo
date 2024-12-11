@@ -212,7 +212,7 @@ class SearchLmsKnowledgeFrag : Fragment(), OnClickListener , LmsSearchAdapter.On
                 (mContext as DashboardActivity).loadFrag(PerformanceInsightPage(), PerformanceInsightPage::class.java.name , true)
             }
 
-            searchLmsKnowledgeFragView.ivMicSearch.id -> {
+            searchLmsKnowledgeFragView.llSearch.id -> {
                 AppUtils.hideSoftKeyboard(mContext as DashboardActivity)
                 if (!searchLmsKnowledgeFragView.etFragContactsSearch.text.toString().trim().equals("")) {
                     searchLmsKnowledgeFragView.progressWheel.spin()

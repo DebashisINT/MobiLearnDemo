@@ -254,7 +254,7 @@ class MyLearningTopicList : Fragment(), View.OnClickListener, LmsSearchAdapter.O
                 }
             }
 
-            myLearningView.llFragSearch .id ->{
+            myLearningView.ivFragSearchVoice .id ->{
                 suffixText = myLearningView.etFragSearch.text.toString().trim()
                 startVoiceInput()
             }
