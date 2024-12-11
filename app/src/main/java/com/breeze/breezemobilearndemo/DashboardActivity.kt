@@ -74,6 +74,7 @@ class DashboardActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
         setContentView(dashView.root)
 
         window.setStatusBarColor(ContextCompat.getColor(this, R.color.toolbar_lms))
+        dashView.dashToolbar.customToolbar.visibility = View.VISIBLE
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         initView()
 

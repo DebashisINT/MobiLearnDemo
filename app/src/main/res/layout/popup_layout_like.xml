@@ -17,7 +17,6 @@
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/back_round_popup"
             android:orientation="vertical"
             android:gravity="center">
 

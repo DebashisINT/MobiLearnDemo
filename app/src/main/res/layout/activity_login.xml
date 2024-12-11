@@ -25,7 +25,7 @@
                     android:layout_width="@dimen/_185sdp"
                     android:layout_height="@dimen/_118sdp"
                     android:src="@drawable/breezelogo"
-                    android:layout_marginTop="@dimen/_170sdp"
+                    android:layout_marginTop="@dimen/_140sdp"
                     android:gravity="center|center_horizontal" />
 
 

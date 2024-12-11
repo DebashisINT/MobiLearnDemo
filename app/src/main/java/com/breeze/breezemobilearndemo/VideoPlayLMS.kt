@@ -2,6 +2,7 @@ package com.breezemobilearndemo
 
 import android.animation.ValueAnimator
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
@@ -1105,6 +1106,11 @@ class VideoPlayLMS : Fragment() {
         if (isReceiverRegistered) {
             requireActivity().unregisterReceiver(screenOffReceiver)
             isReceiverRegistered = false
+        }
+        (mContext as DashboardActivity).showToolbar()
+        (context as Activity).apply {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
+            window.clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)
         }
     }
 

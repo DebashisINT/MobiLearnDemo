@@ -608,10 +608,16 @@ class LeaderboardLmsFrag : Fragment(), View.OnClickListener {
                 }
 
                 tv_header.text = "Filter"
-                val params: WindowManager.LayoutParams = filterDialog!!.getWindow()!!.getAttributes()
-                params.y = -440
-                filterDialog!!.getWindow()?.setAttributes(params)
+                val params: WindowManager.LayoutParams = filterDialog!!.window!!.attributes
+                params.gravity = Gravity.TOP // Set the gravity to top
+                params.y = 100 // Adjust this value to set the vertical position (in pixels)
+                filterDialog!!.window!!.attributes = params
                 filterDialog!!.show()
+
+                /*val params: WindowManager.LayoutParams = filterDialog!!.getWindow()!!.getAttributes()
+                params.y = 440
+                filterDialog!!.getWindow()?.setAttributes(params)
+                filterDialog!!.show()*/
 
                 iv_close.setOnClickListener {
                     str_filterBranchID = str_filterBranchIDTemp
