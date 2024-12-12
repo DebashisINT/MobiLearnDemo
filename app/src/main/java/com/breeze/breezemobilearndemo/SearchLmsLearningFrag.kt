@@ -30,13 +30,13 @@ import kotlinx.coroutines.withContext
 
 class SearchLmsLearningFrag : Fragment(), View.OnClickListener{
 
-    private var binding : FragmentSearchLmsLearningBinding? = null
-    private val myLearningwiseContentView get() = binding!!
-    private lateinit var mContext: Context
+    var binding : FragmentSearchLmsLearningBinding? = null
+    val myLearningwiseContentView get() = binding!!
+    lateinit var mContext: Context
     var contentL: ArrayList<ContentL> = ArrayList()
     var contentWiseAnswerL : ArrayList<ContentWiseAnswerL> =ArrayList()
     var content_idL: ArrayList<String> = ArrayList()
-    private var  suffixText:String = ""
+    var  suffixText:String = ""
     var content_idListSize :Int =0
 
     companion object {
@@ -78,7 +78,7 @@ class SearchLmsLearningFrag : Fragment(), View.OnClickListener{
         initView()
     }
 
-    private fun initView() {
+    fun initView() {
         myLearningwiseContentView.includeBottomTabLms.ivLmsPerformance.setImageResource(R.drawable.performance_insights_checked)
         myLearningwiseContentView.includeBottomTabLms.ivLmsMylearning.setImageResource(R.drawable.open_book_lms_)
         myLearningwiseContentView.includeBottomTabLms.ivLmsKnowledgehub.setImageResource(R.drawable.set_of_books_lms)
@@ -121,7 +121,7 @@ class SearchLmsLearningFrag : Fragment(), View.OnClickListener{
 
     }
 
-    private fun getMyLarningInfoAPI() {
+    fun getMyLarningInfoAPI() {
         try {
             if(topic_id.equals("")){
                 topic_id = CustomStatic.TOPIC_SEL
@@ -170,11 +170,11 @@ class SearchLmsLearningFrag : Fragment(), View.OnClickListener{
         }
     }
 
-    private fun process() {
+    fun process() {
         getTopicContentWiseAnswerListsAPICalling()
     }
 
-    private fun getTopicContentWiseAnswerListsAPICalling(
+    fun getTopicContentWiseAnswerListsAPICalling(
     ) {
 
         if (content_idListSize>0){
@@ -227,7 +227,7 @@ class SearchLmsLearningFrag : Fragment(), View.OnClickListener{
         }
     }
 
-    private fun setLearningData(
+    fun setLearningData(
         finalDatal: ArrayList<ContentL>,
         topic_name: String,
         contentWiseAnswerL: ArrayList<ContentWiseAnswerL>
@@ -321,7 +321,7 @@ class SearchLmsLearningFrag : Fragment(), View.OnClickListener{
         getMyLarningInfoAPI()
     }
 
-    private fun startVoiceInput() {
+    fun startVoiceInput() {
         val intent: Intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE,"en-US")
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, "en-US")

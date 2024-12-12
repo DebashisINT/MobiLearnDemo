@@ -303,7 +303,7 @@ class VideoAdapter(var viewPager2: ViewPager2,
                     onVideoPlaybackStateChangedListener?.onVideoPlaybackStateChanged(exoPlayer!!.currentPosition, exoPlayer!!.duration)
 
                     percentageWatched = (100 * position_ / duration)
-                    if (percentageWatched.toInt() == 100) {
+                    if (percentageWatched.toInt() >= 100) {
                         video_watch_completed = true
                     } else {
                         video_watch_completed = false

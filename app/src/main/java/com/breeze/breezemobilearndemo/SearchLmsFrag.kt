@@ -131,16 +131,16 @@ class SearchLmsFrag : Fragment() , View.OnClickListener, LmsSearchAdapter.OnItem
     }
 
     override fun onItemClick(item: LmsSearchData) {
-        if (lmsSearchAdapter.getSelectedPosition() == RecyclerView.NO_POSITION) {
+       /* if (lmsSearchAdapter.getSelectedPosition() == RecyclerView.NO_POSITION) {
             Toast.makeText(mContext, "Please select one topic", Toast.LENGTH_SHORT).show()
-        } else {
+        } else {*/
             val selectedItem = item
             VideoPlayLMS.previousFrag = SearchLmsFrag.toString()
             VideoPlayLMS.loadedFrom = "SearchLmsFrag"
             Pref.videoCompleteCount = "0"
 
             (mContext as DashboardActivity).loadFrag(MyTopicsWiseContents.getInstance(selectedItem.searchid+"~"+selectedItem.courseName), MyTopicsWiseContents::class.java.name ,true )
-        }
+       // }
     }
 
     fun getTopicL() {

@@ -29,14 +29,14 @@ import kotlinx.coroutines.withContext
 
 
 class MyTopicsWiseContents : Fragment() , OnClickListener {
-    private var binding : FragmentMyTopicsWiseContentsBinding? = null
-    private val myTopicewiseContentView get() = binding!!
-    private lateinit var mContext: Context
+    var binding : FragmentMyTopicsWiseContentsBinding? = null
+    val myTopicewiseContentView get() = binding!!
+    lateinit var mContext: Context
     var contentL: ArrayList<ContentL> = ArrayList()
     var content_idL: ArrayList<String> = ArrayList()
     var content_idListSize :Int =0
     var contentWiseAnswerL : ArrayList<ContentWiseAnswerL> =ArrayList()
-    private var  suffixText:String = ""
+    var  suffixText:String = ""
 
     companion object {
         var topic_id: String = ""
@@ -82,7 +82,7 @@ class MyTopicsWiseContents : Fragment() , OnClickListener {
         initView()
     }
 
-    private fun initView() {
+    fun initView() {
         myTopicewiseContentView.bottomLayoutLms.ivLmsPerformance.setImageResource(R.drawable.performance_insights)
         myTopicewiseContentView.bottomLayoutLms.ivLmsMylearning .setImageResource(R.drawable.my_topics_selected)
         myTopicewiseContentView.bottomLayoutLms.ivLmsKnowledgehub .setImageResource(R.drawable.set_of_books_lms)
@@ -129,7 +129,7 @@ class MyTopicsWiseContents : Fragment() , OnClickListener {
 
     }
 
-    private fun getMyLarningInfoAPI() {
+    fun getMyLarningInfoAPI() {
         try {
             if(topic_id.equals("")){
                 topic_id = CustomStatic.TOPIC_SEL
@@ -178,11 +178,11 @@ class MyTopicsWiseContents : Fragment() , OnClickListener {
         }
     }
 
-    private fun process(){
+    fun process(){
         getTopicContentWiseAnswerListsAPICalling()
     }
 
-    private fun getTopicContentWiseAnswerListsAPICalling(
+    fun getTopicContentWiseAnswerListsAPICalling(
     ) {
         if (content_idListSize>0){
             try {
@@ -231,7 +231,7 @@ class MyTopicsWiseContents : Fragment() , OnClickListener {
         }
     }
 
-    private fun setLearningData(
+    fun setLearningData(
         finalDatal: ArrayList<ContentL>,
         topic_name: String,
         contentWiseAnswerL: ArrayList<ContentWiseAnswerL>
@@ -316,7 +316,7 @@ class MyTopicsWiseContents : Fragment() , OnClickListener {
         getMyLarningInfoAPI()
     }
 
-    private fun startVoiceInput() {
+    fun startVoiceInput() {
         val intent: Intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE,"en-US")
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, "en-US")

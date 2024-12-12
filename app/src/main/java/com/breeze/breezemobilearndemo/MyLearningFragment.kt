@@ -161,6 +161,15 @@ class MyLearningFragment : Fragment(), OnClickListener {
             } else {
                 homeView.cvLastVidRoot.visibility = View.GONE
             }
+
+            homeView.cvLastVidRoot.setOnClickListener {
+                setHomeClickFalse()
+                VideoPlayLMS.loadedFrom = "LMSDASHBOARD"
+                CustomStatic.VideoPosition = Pref.LastVideoPlay_VidPosition.toInt()
+                Pref.videoCompleteCount = "0"
+                (mContext as DashboardActivity).loadFrag(VideoPlayLMS.getInstance(Pref.LastVideoPlay_TopicID +"~"+ Pref.LastVideoPlay_TopicName),VideoPlayLMS::class.java.name)
+            }
+
         } catch (e:Exception) {
             e.printStackTrace()
         }

@@ -426,9 +426,14 @@ class LmsQuestionAnswerSet : Fragment() , View.OnClickListener{
             }
             if (lastvideo==true){
                 CustomStatic.IsHomeClick = false
-                (mContext as DashboardActivity).loadFrag(SearchLmsFrag(),SearchLmsFrag::class.java.name, false)
-            }else {
+                //(mContext as DashboardActivity).loadFrag(SearchLmsFrag(),SearchLmsFrag::class.java.name, false)
                 (mContext as DashboardActivity).onBackPressed()
+                //(mContext as DashboardActivity).onBackPressed()
+            }else {
+
+                //(mContext as DashboardActivity).loadFrag(AllTopicsWiseContents(),AllTopicsWiseContents::class.java.name, false)
+                (mContext as DashboardActivity).onBackPressed()
+                //(mContext as DashboardActivity).onBackPressed()
             }
         }
         popup_image.visibility =View.VISIBLE

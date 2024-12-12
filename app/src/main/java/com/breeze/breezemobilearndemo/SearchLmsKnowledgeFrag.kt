@@ -186,15 +186,15 @@ class SearchLmsKnowledgeFrag : Fragment(), OnClickListener , LmsSearchAdapter.On
 
 
     override fun onItemClick(item: LmsSearchData) {
-        if (lmsSearchAdapter.getSelectedPosition() == RecyclerView.NO_POSITION) {
+     /*   if (lmsSearchAdapter.getSelectedPosition() == RecyclerView.NO_POSITION) {
             Toast.makeText(mContext, "Please select one topic", Toast.LENGTH_SHORT).show()
-        } else {
+        } else {*/
             val selectedItem = item
             VideoPlayLMS.previousFrag = SearchLmsFrag.toString()
             VideoPlayLMS.loadedFrom = "SearchLmsKnowledgeFrag"
             Pref.videoCompleteCount = "0"
             (mContext as DashboardActivity).loadFrag(AllTopicsWiseContents.getInstance(selectedItem.searchid+"~"+selectedItem.courseName), AllTopicsWiseContents::class.java.name, true, )
-        }
+       // }
     }
 
     override fun onClick(p0: View?) {

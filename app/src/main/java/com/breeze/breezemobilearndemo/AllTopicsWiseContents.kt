@@ -30,15 +30,15 @@ import kotlinx.coroutines.withContext
 
 class AllTopicsWiseContents : Fragment(), OnClickListener , MyLearningProgressAdapter.OnItemClickListener{
 
-    private var binding : FragmentAllTopicsWiseContentsBinding? = null
-    private val alltopicsWiseContentView get() = binding!!
+    var binding : FragmentAllTopicsWiseContentsBinding? = null
+    val alltopicsWiseContentView get() = binding!!
 
-    private lateinit var mContext: Context
+    lateinit var mContext: Context
     var contentL: ArrayList<ContentL> = ArrayList()
     var content_idListSize :Int =0
     var contentWiseAnswerL : ArrayList<ContentWiseAnswerL> =ArrayList()
     var content_idL: ArrayList<String> = ArrayList()
-    private var  suffixText:String = ""
+    var  suffixText:String = ""
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -79,7 +79,7 @@ class AllTopicsWiseContents : Fragment(), OnClickListener , MyLearningProgressAd
         initView()
     }
 
-    private fun initView() {
+    fun initView() {
         requireActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING);
 
         alltopicsWiseContentView.includeBottomTabLms.ivLmsPerformance.setImageResource(R.drawable.performance_insights)
@@ -122,7 +122,7 @@ class AllTopicsWiseContents : Fragment(), OnClickListener , MyLearningProgressAd
 
     }
 
-    private fun getMyLarningInfoAPI() {
+    fun getMyLarningInfoAPI() {
         try {
             if(topic_id.equals("")){
                 topic_id = CustomStatic.TOPIC_SEL
@@ -171,13 +171,13 @@ class AllTopicsWiseContents : Fragment(), OnClickListener , MyLearningProgressAd
         }
     }
 
-    private fun process() {
+    fun process() {
 
         getTopicContentWiseAnswerListsAPICalling( )
 
     }
 
-    private fun getTopicContentWiseAnswerListsAPICalling(
+    fun getTopicContentWiseAnswerListsAPICalling(
     ) {
 
         if (content_idListSize>0){
@@ -231,7 +231,7 @@ class AllTopicsWiseContents : Fragment(), OnClickListener , MyLearningProgressAd
 
     }
 
-    private fun setLearningData(
+    fun setLearningData(
         finalDatal: ArrayList<ContentL>,
         topic_name: String,
         contentWiseAnswerL: ArrayList<ContentWiseAnswerL>
@@ -297,7 +297,7 @@ class AllTopicsWiseContents : Fragment(), OnClickListener , MyLearningProgressAd
         getMyLarningInfoAPI()
     }
 
-    private fun startVoiceInput() {
+    fun startVoiceInput() {
         val intent: Intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE,"en-US")
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, "en-US")
@@ -362,4 +362,5 @@ class AllTopicsWiseContents : Fragment(), OnClickListener , MyLearningProgressAd
         super.onResume()
         (mContext as DashboardActivity).toolbarTitle.text = "All Topics"
     }
+
 }
