@@ -1,5 +1,6 @@
 package com.breezemobilearndemo
 
+import android.annotation.SuppressLint
 import android.app.ActivityOptions
 import android.app.Dialog
 import android.content.Context
@@ -10,12 +11,17 @@ import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
 import android.telephony.TelephonyManager
+import android.text.TextUtils
 import android.view.View
 import android.view.WindowManager
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatTextView
+import com.breeze.breezemobilearndemo.api.ConfigFetchResponseModel
+import com.breezefieldsalesdemo.features.login.api.global_config.ConfigFetchRepoProvider
+import com.breezefieldsalesdemo.features.login.api.user_config.UserConfigRepoProvider
+import com.breezefieldsalesdemo.features.login.model.userconfig.UserConfigResponseModel
 import com.breezemobilearndemo.api.LoginRepositoryProvider
 import com.breezemobilearndemo.databinding.ActivityLoginBinding
 import com.vmadalin.easypermissions.EasyPermissions
@@ -149,9 +155,11 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
                     binding!!.progressWheel.stopSpinning()
 
                     if (loginResponse.status == NetworkConstant.SUCCESS) {
+                        callUserConfigApi()
 
                         if (Pref.temp_user_id == loginResponse.user_details!!.user_id) {
                             doAfterLoginFunctionality(loginResponse)
+
                         }
                         else {
                             doAfterLoginFunctionality(loginResponse)
@@ -185,6 +193,93 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
                         loginView.loginTV.isEnabled = true
                         error.printStackTrace()
                     })
+        )
+    }
+
+    private fun callUserConfigApi() {
+        val repository = UserConfigRepoProvider.provideUserConfigRepository()
+        DashboardActivity.compositeDisposable.add(
+            repository.userConfig(Pref.user_id!!)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe({ result ->
+                    val response = result as UserConfigResponseModel
+                    if (response.status == NetworkConstant.SUCCESS) {
+                        try {
+
+                            if (response.getconfigure != null && response.getconfigure!!.size > 0) {
+                                for (i in response.getconfigure!!.indices) {
+                                    //code end mantis id 27436 IsShowCRMOpportunity,IsEditEnableforOpportunity,IsDeleteEnableforOpportunity functionality Puja 21.05.2024 V4.2.8
+                                    if (response.getconfigure?.get(i)?.Key.equals("IsUserWiseLMSEnable", ignoreCase = true)) {
+                                        Pref.IsUserWiseLMSEnable = response.getconfigure!![i].Value == "1"
+                                        if (!TextUtils.isEmpty(response.getconfigure?.get(i)?.Value)) {
+                                            Pref.IsUserWiseLMSEnable = response.getconfigure?.get(i)?.Value == "1"
+                                        }
+                                    }
+                                    else if (response.getconfigure?.get(i)?.Key.equals("IsUserWiseLMSFeatureOnly", ignoreCase = true)) {
+                                        Pref.IsUserWiseLMSFeatureOnly = response.getconfigure!![i].Value == "1"
+                                        if (!TextUtils.isEmpty(response.getconfigure?.get(i)?.Value)) {
+                                            Pref.IsUserWiseLMSFeatureOnly = response.getconfigure?.get(i)?.Value == "1"
+                                        }
+                                    }
+                                }
+                            }
+                        } catch (e: Exception) {
+                            e.printStackTrace()
+                        }
+                    }
+
+                    getConfigFetchApi()
+
+                }, { error ->
+                    error.printStackTrace()
+                    getConfigFetchApi()
+                })
+        )
+    }
+
+    @SuppressLint("SuspiciousIndentation")
+    private fun getConfigFetchApi() {
+
+        val repository = ConfigFetchRepoProvider.provideConfigFetchRepository()
+        DashboardActivity.compositeDisposable.add(
+            repository.configFetch()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe({ result ->
+
+                    val configResponse = result as ConfigFetchResponseModel
+                    if (configResponse.status == NetworkConstant.SUCCESS) {
+
+                        //begin mantis id 0027432 loc_k functionality Puja 08-05-2024 v4.2.7
+                        if (configResponse.loc_k != null)
+                            Pref.loc_k = configResponse.loc_k!!
+                        //end mantis id 0027432 loc_k functionality Puja 08-05-2024  v4.2.7
+
+                        //begin mantis id 0027432 firebase_k functionality Puja 08-05-2024 v4.2.7
+                        if (configResponse.firebase_k != null)
+                            Pref.firebase_k = "key="+configResponse.firebase_k!!
+                        //end mantis id 0027432 firebase_k functionality Puja 08-05-2024  v4.2.7
+
+                        //begin mantis id 0027683 QuestionAfterNoOfContentForLMS functionality Puja 05-08-2024  v4.2.9
+                        if (configResponse.QuestionAfterNoOfContentForLMS != null)
+                            Pref.QuestionAfterNoOfContentForLMS = configResponse.QuestionAfterNoOfContentForLMS!!
+                        //end mantis id 0027683 QuestionAfterNoOfContentForLMS functionality Puja 05-08-2024  v4.2.9
+
+
+                        //Puja 07-10-2024 mantis 0027717
+                        if (configResponse.IsVideoAutoPlayInLMS != null)
+                            Pref.IsVideoAutoPlayInLMS = configResponse.IsVideoAutoPlayInLMS!!
+
+                        //Puja 17-10-2024 mantis 0027772
+                        if (configResponse.ShowRetryIncorrectQuiz != null)
+                            Pref.ShowRetryIncorrectQuiz = configResponse.ShowRetryIncorrectQuiz!!
+
+                    }
+
+                }, { error ->
+                    error.printStackTrace()
+                })
         )
     }
 

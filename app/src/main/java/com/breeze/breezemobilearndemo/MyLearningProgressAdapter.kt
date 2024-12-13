@@ -67,10 +67,13 @@ class MyLearningProgressAdapter(
                     binding.tvQuizstatus.visibility = View.GONE
                 }
 
+
                 if (item.CompletionStatus == true) {
                     binding.tvProgressText.setImageResource(R.drawable.quiz_done)
                     binding.tvQuizstatus.text = "Quiz Done"
-                    binding.llRetryIncorrectQuizHeader.visibility = View.VISIBLE
+                    if (Pref.ShowRetryIncorrectQuiz == true) {
+                        binding.llRetryIncorrectQuizHeader.visibility = View.VISIBLE
+                    }
                     binding.llRetryIncorrectQuizHeader.isEnabled = true
 
                     if (contentId?.size!! == 0) {
@@ -83,7 +86,9 @@ class MyLearningProgressAdapter(
                 else {
                     binding.tvProgressText.setImageResource(R.drawable.quiz_pending)
                     binding.tvQuizstatus.text = "Quiz Pending"
-                    binding.llRetryIncorrectQuizHeader.visibility = View.VISIBLE
+                    if (Pref.ShowRetryIncorrectQuiz == true) {
+                        binding.llRetryIncorrectQuizHeader.visibility = View.VISIBLE
+                    }
                     binding.llRetryIncorrectQuizHeader.isEnabled = false
                 }
             } else {
@@ -122,6 +127,11 @@ class MyLearningProgressAdapter(
         binding.llContentRootPerform.setOnClickListener {
             listener.onItemClick(item, position)
         }
+
+        if (!Pref.ShowRetryIncorrectQuiz) {
+            binding.llRetryIncorrectQuizHeader.visibility = View.GONE
+        }
+
         binding.llRetryIncorrectQuizHeader.setOnClickListener {
             listener.onRetryClick(item, position)
         }

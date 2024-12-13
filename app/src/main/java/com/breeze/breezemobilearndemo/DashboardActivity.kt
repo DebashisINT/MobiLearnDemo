@@ -395,13 +395,13 @@ class DashboardActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
             }
             backpressed = System.currentTimeMillis()
         }
-        else if (currentFragment is VideoPlayLMS || currentFragment is LmsQuestionAnswerSet) {
+        else if (currentFragment is VideoPlayLMS || currentFragment is RetryIncorrectQuizFrag) {
             CustomStatic.IsBackClick = true
             super.onBackPressed()
-            if (currentFragment is LmsQuestionAnswerSet) {
+            /*if (currentFragment is LmsQuestionAnswerSet) {
                 super.onBackPressed()
                 super.onBackPressed()
-            }
+            }*/
             val updatedFragment = getFragment()
             if (updatedFragment is MyLearningFragment) {
                 (getFragment() as MyLearningFragment).callLastPlayedVideo()

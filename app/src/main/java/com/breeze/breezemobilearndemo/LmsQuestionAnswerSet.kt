@@ -1,6 +1,8 @@
 package com.breezemobilearndemo
 
+import android.app.Activity
 import android.content.Context
+import android.content.pm.ActivityInfo
 import android.graphics.PorterDuff
 import android.graphics.Typeface
 import android.graphics.drawable.ColorDrawable
@@ -81,7 +83,12 @@ class LmsQuestionAnswerSet : Fragment() , View.OnClickListener{
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        requireActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING);
+        requireActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING)
+        (mContext as DashboardActivity).showToolbar()
+        (context as Activity).apply {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
+            window.clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)
+        }
         initView()
     }
 

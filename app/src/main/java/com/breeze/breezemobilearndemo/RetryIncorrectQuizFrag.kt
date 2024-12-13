@@ -194,4 +194,9 @@ class RetryIncorrectQuizFrag : Fragment() ,View.OnClickListener ,RetryInCorrectQ
         super.onDestroy()
         binding = null
     }
+
+    override fun onResume() {
+        super.onResume()
+        (mContext as DashboardActivity).toolbarTitle.text = "Review and Retry"
+    }
 }
