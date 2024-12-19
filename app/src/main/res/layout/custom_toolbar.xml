@@ -2,7 +2,7 @@
 <androidx.appcompat.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/_40sdp"
+    android:layout_height="@dimen/_36sdp"
     app:contentInsetStart="0dp"
     android:background="@color/toolbar_lms"
     android:id="@+id/custom_toolbar">
@@ -17,10 +17,8 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="Toolbar"
-            android:textStyle="bold"
             android:textSize="@dimen/_12sdp"
             android:textColor="@color/white"
-            android:fontFamily="@font/poppins_regular"
             android:gravity="center"/>
 
         <Space
@@ -88,8 +86,8 @@
                 android:padding="@dimen/_5sdp"
                 android:layout_marginTop="@dimen/_1sdp"
                 android:src="@drawable/ic_bookmark_fill"
-                android:tint="@color/white"
-                android:visibility="visible" />
+                android:visibility="visible"
+                app:tint="@color/white" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tv_saved_count"

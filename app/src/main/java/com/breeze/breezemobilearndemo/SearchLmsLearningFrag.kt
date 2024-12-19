@@ -116,7 +116,7 @@ class SearchLmsLearningFrag : Fragment(), View.OnClickListener{
         myLearningwiseContentView.llFragSearchRoot.setOnClickListener(this)
 
         val sortedList = contentL.sortedBy { it.content_play_sequence.toInt() }.toCollection(ArrayList())
-        setLearningData(sortedList, MyTopicsWiseContents.topic_name, contentWiseAnswerL)
+        setLearningData(sortedList, topic_name, contentWiseAnswerL)
 
 
     }

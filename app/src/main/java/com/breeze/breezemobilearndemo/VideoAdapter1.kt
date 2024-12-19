@@ -373,7 +373,8 @@ class VideoAdapter1(var viewPager2: ViewPager2,
                         if(CustomStatic.IsHomeClick == true){
                             CustomStatic.IsHomeClick = false
                         }else{
-                            if (Pref.LastVideoPlay_VidPosition.toInt() == absoluteAdapterPosition && CustomStatic.IsQuestionPageOpen == false) {
+                            if (Pref.LastVideoPlay_VidPosition.toInt() == absoluteAdapterPosition && CustomStatic.IsQuestionPageOpen == false && CustomStatic.IsHomeClick
+                                == false) {
                                 showWatchPointPopup(content_watch_point)
                             }
                         }
@@ -458,6 +459,15 @@ class VideoAdapter1(var viewPager2: ViewPager2,
         }
     }
     private fun showWatchPointPopup(content_watch_point: Int) {
+
+        if(CustomStatic.IsBackClick == true){
+            try {
+                popupWindow.dismiss()
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+            return
+        }
 
         val inflater: LayoutInflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         val popupView: View = inflater.inflate(R.layout.popup_layout_congratulation_, null)

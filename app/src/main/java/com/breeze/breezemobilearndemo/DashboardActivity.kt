@@ -12,12 +12,18 @@ import android.graphics.BitmapFactory
 import android.graphics.PorterDuff
 import android.graphics.PorterDuffColorFilter
 import android.graphics.drawable.BitmapDrawable
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.os.Environment
+import android.os.FileUtils
 import android.os.Handler
+import android.provider.Settings
 import android.speech.RecognizerIntent
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
+import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.view.WindowManager
@@ -30,15 +36,17 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
+import androidx.core.content.FileProvider
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
-import com.breezefieldsalesdemo.features.logout.presentation.api.LogoutRepositoryProvider
 import com.breeze.breezemobilearndemo.CustomStatic
+import com.breezefieldsalesdemo.features.logout.presentation.api.LogoutRepositoryProvider
 import com.breezemobilearndemo.api.LMSRepoProvider
 import com.breezemobilearndemo.databinding.ActivityDashboardBinding
+import com.breezemobilearndemo.databinding.MenuItemLayoutBinding
 import com.google.android.gms.tasks.Task
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.FirebaseApp
@@ -46,6 +54,7 @@ import com.google.firebase.messaging.FirebaseMessaging
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
+import java.io.File
 import java.util.Locale
 import java.util.Stack
 
@@ -64,7 +73,6 @@ class DashboardActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
     companion object {
         @JvmStatic
         val compositeDisposable: CompositeDisposable = CompositeDisposable()
-        var isMeetingUpdating = false
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -76,6 +84,7 @@ class DashboardActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
         window.setStatusBarColor(ContextCompat.getColor(this, R.color.toolbar_lms))
         dashView.dashToolbar.customToolbar.visibility = View.VISIBLE
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+
         initView()
 
         if (intent != null && intent.extras != null) {
@@ -92,6 +101,7 @@ class DashboardActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
             .registerReceiver(fcmReceiver, IntentFilter("FCM_ACTION_RECEIVER"))
 
         }
+
 
     private fun initView() {
         toggle = ActionBarDrawerToggle(
@@ -110,9 +120,7 @@ class DashboardActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
         dashView.navView.setNavigationItemSelectedListener(this)
 
         dashView.navView.itemIconTintList = null
-        dashView.navView.menu.findItem(R.id.menu_home).setIcon(R.drawable.home_icon_with_backgrnd)
-        dashView.navView.menu.findItem(R.id.menu_lms).setIcon(R.drawable.ic_learning_adv)
-        dashView.navView.menu.findItem(R.id.menu_privacy_policy).setIcon(R.drawable.ic_privacy_policy)
+        //dashView.navView.menu.findItem(R.id.menu_privacy_policy).setIcon(R.drawable.ic_privacy_policy)
 
         toolbarTitle = findViewById(R.id.toolbarText)
         dashView.dashToolbar.ivHomeIcon.setOnClickListener(this)
@@ -186,6 +194,30 @@ class DashboardActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
 
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.app_menu, menu) // Inflate your menu resource
+
+        for (i in 0 until menu!!.size()) {
+            val menuItem = menu.getItem(i)
+            val actionView = menuItem.actionView
+
+            // Check if actionView is not null
+            if (actionView != null) {
+                // Use ViewBinding to access the views
+                val binding = MenuItemLayoutBinding.bind(actionView) // Replace with your actual binding class
+
+                // Now you can access the views directly
+                val icon = binding.menuIcon // Access the ImageView
+                val title = binding.menuTitle // Access the TextView
+
+                // Set the icon and title as needed
+                icon.setImageDrawable(menuItem.icon) // Set the icon directly from the MenuItem
+                title.text = menuItem.title // Set the title directly from the MenuItem
+            }
+        }
+
+        return true
+    }
     private fun logoutAPICalling() {
 
         val repository = LogoutRepositoryProvider.provideLogoutRepository()
@@ -254,6 +286,7 @@ class DashboardActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
                 dashView.dashToolbar.ivHomeIcon.visibility = View.GONE
                 dashView.dashToolbar.addBookmark.visibility = View.VISIBLE
                 dashView.dashToolbar.logo.visibility = View.VISIBLE
+                dashView.dashToolbar.tvNotiCount.visibility = View.VISIBLE
                 dashView.dashToolbar.downLogoSpc.visibility = View.GONE
                 toolbarTitle.text = "Home"
             }
@@ -281,12 +314,6 @@ class DashboardActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
                 toolbarTitle.text = "Home"
             }
 
-            R.id.menu_lms_dashboard -> {
-                loadFrag(MyLearningFragment(), MyLearningFragment::class.java.name,isAdd = false)
-                dashView.dashToolbar.ivHomeIcon.visibility = View.GONE
-                toolbarTitle.text = "Home"
-            }
-
             R.id.menu_my_learning -> {
                 loadFrag(MyLearningTopicList(), MyLearningTopicList::class.java.name,isAdd = false)
             }
@@ -304,9 +331,9 @@ class DashboardActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
                 loadFrag(LeaderboardLmsFrag(), LeaderboardLmsFrag::class.java.name,isAdd = false)
             }
 
-            R.id.menu_privacy_policy -> {
+            /*R.id.menu_privacy_policy -> {
                 loadFrag(PrivacypolicyWebviewFrag(), PrivacypolicyWebviewFrag::class.java.name, false)
-            }
+            }*/
         }
         dashView.drawer.closeDrawer(GravityCompat.START)
         return true
@@ -414,6 +441,19 @@ class DashboardActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
             }
             else if (updatedFragment is SearchLmsLearningFrag) {
                 (updatedFragment as SearchLmsLearningFrag).getMyLarningInfoAPI()
+            }
+        }
+        else if (currentFragment is MyTopicsWiseContents || currentFragment is AllTopicsWiseContents || currentFragment is SearchLmsLearningFrag ){
+            super.onBackPressed()
+            val updatedFragment = getFragment()
+            if (updatedFragment is SearchLmsFrag) {
+                (getFragment() as SearchLmsFrag).getTopicL()
+            }
+            else if (updatedFragment is SearchLmsKnowledgeFrag) {
+                (getFragment() as SearchLmsKnowledgeFrag).getTopicL()
+            }
+            else if (updatedFragment is MyLearningTopicList) {
+                (getFragment() as MyLearningTopicList).getTopicL()
             }
         }
         else if (currentFragment is SearchLmsFrag || currentFragment is SearchLmsKnowledgeFrag ||currentFragment is PerformanceInsightPage) {
@@ -541,7 +581,7 @@ class DashboardActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
         toggle.syncState()
 
         val bitmap = BitmapFactory.decodeResource(resources, R.drawable.ic_back)
-        val scaledBitmap = Bitmap.createScaledBitmap(bitmap, 30, 30, false)
+        val scaledBitmap = Bitmap.createScaledBitmap(bitmap, 35, 40, false)
         val scaledDrawable = BitmapDrawable(resources, scaledBitmap)
         val colorFilter = PorterDuffColorFilter(ContextCompat.getColor(this, R.color.color_white), PorterDuff.Mode.SRC_IN)
         scaledDrawable.colorFilter = colorFilter
@@ -578,7 +618,7 @@ class DashboardActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
     fun updateNotificationCount() {
         val notificationCount = fetchNotificationCount() // Get the count from the database
         if (notificationCount >0) {
-            dashView.dashToolbar.tvNotiCount.visibility = View.VISIBLE
+            //dashView.dashToolbar.tvNotiCount.visibility = View.VISIBLE
             dashView.dashToolbar.tvNotiCount.text =
                 notificationCount.toString() // Update the TextView
         }

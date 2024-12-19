@@ -9,7 +9,7 @@
     android:background="@color/white"
     android:clickable="true"
     xmlns:wheel="http://schemas.android.com/apk/res-auto"
-    tools:context=".features.mylearning.RetryQuestionFrag">
+    >
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -57,7 +57,6 @@
                     android:paddingEnd="@dimen/_5sdp"
                     android:textStyle="bold"
                     android:visibility="gone"
-                    android:background="@drawable/border_background_timer"
                     android:layout_gravity="bottom"
                     android:textColor="@android:color/white"
                     android:textSize="22sp"
@@ -337,9 +336,9 @@
                         android:src="@drawable/icon_pointer_gif"
                         android:rotation="270"
                         android:scaleY="-1"
-                        android:tint="@color/black"
                         android:layout_marginLeft="@dimen/_10sdp"
-                        android:layout_marginTop="@dimen/_4sdp"/>
+                        android:layout_marginTop="@dimen/_4sdp"
+                        app:tint="@color/black" />
 
                 </LinearLayout>
 

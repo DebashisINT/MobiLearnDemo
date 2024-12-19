@@ -39,7 +39,7 @@ class NotificationUtils(headerText: String, bodyText: String, shopId: String, lo
 
         val remoteView = RemoteViews(applicationContext.packageName, R.layout.customnotificationsmall)
 
-        remoteView.setImageViewResource(R.id.imagenotileft_small, R.drawable.ic_logo)
+        remoteView.setImageViewResource(R.id.imagenotileft_small, R.drawable.breezelogo)
         remoteView.setTextViewText(R.id.title_small, remoteMessage?.data?.get("body"))
         remoteView.setTextViewText(R.id.text_small, "Nordusk")
 
@@ -66,7 +66,7 @@ class NotificationUtils(headerText: String, bodyText: String, shopId: String, lo
             notificationmanager.createNotificationChannel(notificationChannel)
 
             val notificationBuilder = NotificationCompat.Builder(applicationContext)
-                .setSmallIcon(R.drawable.ic_notifications_icon)
+                .setSmallIcon(R.drawable.breezelogo)
                 .setDefaults(Notification.DEFAULT_ALL)
                 .setAutoCancel(true)
                 .setChannelId(channelId)

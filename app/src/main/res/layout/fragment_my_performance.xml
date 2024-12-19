@@ -56,7 +56,6 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:src="@drawable/avater"
                 />
         </androidx.cardview.widget.CardView>
 
@@ -334,7 +333,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/box_bg_th"
                         />
 
                     <FrameLayout
@@ -346,7 +344,7 @@
                             android:layout_gravity="center|top"
                             android:layout_width="@dimen/_50sdp"
                             android:layout_height="@dimen/_50sdp"
-                            android:src="@drawable/youtube_new"/>
+                            />
 
                         <TextView
                             android:text="5"

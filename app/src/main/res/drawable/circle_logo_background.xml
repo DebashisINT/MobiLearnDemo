@@ -1,0 +1,14 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!--&lt;!&ndash; Shadow Layer &ndash;&gt;
+    <item>
+        <shape>
+            <solid android:color="@color/white" /> &lt;!&ndash; Shadow color &ndash;&gt;
+            <corners android:radius="60dp" /> &lt;!&ndash; Circular shape &ndash;&gt;
+        </shape>
+    </item>-->
+    <!-- White Circle Layer -->
+        <shape>
+            <solid android:color="@android:color/white" /> <!-- Background color -->
+            <corners android:radius="100dp" /> <!-- Circular shape -->
+        </shape>
+</layer-list>

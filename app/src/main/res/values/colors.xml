@@ -10,9 +10,11 @@
     <color name="attendance_report_header_blue">#009cc4</color>
 
     <color name="lightest_new_gray">#E0E0E0</color>
+    <color name="trans_50">#66FFFFFF</color>
     <color name="white">#FFFFFF</color>
     <color name="lightest_new_gray1">#F8F8F8</color>
     <color name="black">#FF000000</color>
+    <color name="text_color">#202020</color>
     <color name="color_custom_green">#57a518</color>
     <color name="color_custom_red">#f8424e</color>
     <color name="color_white">#FFFFFFFF</color>
@@ -59,4 +61,5 @@
     <color name="card_custom_back2">#EFE8E8</color>
     <color name="color_deep_blue">#084e8b</color>
     <color name="color_deep_blue_leader">#2a0f62</color>
+    <color name="panel_color">#feeeef</color>
 </resources>

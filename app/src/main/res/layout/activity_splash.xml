@@ -11,12 +11,26 @@
     android:background="@drawable/ic_new_login_bg_new3"
     tools:context=".SplashActivity">
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/breezelogo"
-        android:layout_gravity="center"
-         />
+
+    <LinearLayout
+        android:layout_width="@dimen/_200sdp"
+        android:layout_height="@dimen/_200sdp"
+        android:orientation="vertical"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center"
+        >
+
+        <ImageView
+            android:layout_width="@dimen/_170sdp"
+            android:layout_height="@dimen/_170sdp"
+            android:padding="@dimen/_33sdp"
+            android:src="@drawable/breezelogo"
+            android:contentDescription="App Logo"
+            android:background="@drawable/circle_logo_background"
+            android:layout_gravity="center"
+            android:scaleType="centerInside" />
+
+    </LinearLayout>
 
     <com.pnikosis.materialishprogress.ProgressWheel
         android:id="@+id/progress_wheel"
@@ -27,3 +41,4 @@
         wheel:matProg_progressIndeterminate="true" />
 
 </LinearLayout>
+

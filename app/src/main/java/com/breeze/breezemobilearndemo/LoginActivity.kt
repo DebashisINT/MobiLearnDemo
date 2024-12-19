@@ -3,21 +3,30 @@ package com.breezemobilearndemo
 import android.annotation.SuppressLint
 import android.app.ActivityOptions
 import android.app.Dialog
+import android.content.ContentResolver
+import android.content.ContentUris
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.provider.MediaStore
 import android.provider.Settings
 import android.telephony.TelephonyManager
+import android.text.InputType
 import android.text.TextUtils
+import android.util.Log
 import android.view.View
 import android.view.WindowManager
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatTextView
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import com.breeze.breezemobilearndemo.api.ConfigFetchResponseModel
 import com.breezefieldsalesdemo.features.login.api.global_config.ConfigFetchRepoProvider
 import com.breezefieldsalesdemo.features.login.api.user_config.UserConfigRepoProvider
@@ -27,14 +36,20 @@ import com.breezemobilearndemo.databinding.ActivityLoginBinding
 import com.vmadalin.easypermissions.EasyPermissions
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import android.Manifest
 
 class LoginActivity : AppCompatActivity(), View.OnClickListener {
 
     var binding: ActivityLoginBinding? = null
     val loginView get() = binding!!
+    private var isPasswordVisible = false // Track the visibility status of the password
+    private val REQUEST_CODE = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // Request permissions at runtime
+        //requestStoragePermissions()
 
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(loginView.root)
@@ -42,6 +57,69 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
         initView()
     }
 
+    /*private fun requestStoragePermissions() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), REQUEST_CODE)
+        } else {
+            // Permissions already granted, proceed with file deletion
+            deleteFileWithPartialName("app-debug")
+        }
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == REQUEST_CODE) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // Permission granted, proceed with file deletion
+                deleteFileWithPartialName("app-debug")
+            } else {
+                // Permission denied, handle accordingly
+                Log.d("MainActivity", "Permission denied to access external storage.")
+            }
+        }
+    }*/
+
+    private fun deleteFileWithPartialName(partialName: String) {
+        val contentResolver: ContentResolver = contentResolver
+        val uri: Uri = MediaStore.Downloads.EXTERNAL_CONTENT_URI
+
+        val projection = arrayOf(MediaStore.Downloads._ID, MediaStore.Downloads.DISPLAY_NAME)
+        val selection = "${MediaStore.Downloads.DISPLAY_NAME} LIKE ?"
+        val selectionArgs = arrayOf("%$partialName%")
+
+        // Log the query parameters
+        Log.d("FileDeletion", "Querying for files with name containing: $partialName")
+
+        val cursor = contentResolver.query(uri, projection, selection, selectionArgs, null)
+
+        // Check if the cursor is null or empty
+        if (cursor == null) {
+            Log.d("FileDeletion", "Cursor is null.")
+            return
+        }
+
+        Log.d("FileDeletion", "Cursor count: ${cursor.count}")
+
+        cursor.use {
+            if (it.count == 0) {
+                Log.d("FileDeletion", "No files found matching the criteria.")
+                return
+            }
+
+            while (it.moveToNext()) {
+                val id = it.getLong(it.getColumnIndexOrThrow(MediaStore.Downloads._ID))
+                val fileUri = ContentUris.withAppendedId(uri, id)
+
+                // Delete the file
+                val deletedRows = contentResolver.delete(fileUri, null, null)
+                if (deletedRows > 0) {
+                    Log.d("FileDeletion", "Deleted file: ${it.getString(it.getColumnIndexOrThrow(MediaStore.Downloads.DISPLAY_NAME))}")
+                } else {
+                    Log.d("FileDeletion", "Failed to delete file: ${it.getString(it.getColumnIndexOrThrow(MediaStore.Downloads.DISPLAY_NAME))}")
+                }
+            }
+        }
+    }
     private fun getIMEI() {
 
         try {
@@ -60,10 +138,18 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun initView() {
-
+        loginView.passwordEDT.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
         checkPermission()
         loginView.loginTV.setOnClickListener(this)
+        loginView.passwordEyeIV.setOnClickListener(this)
         loginView.cbRememberMe .isChecked = Pref.isRememberMe
+
+
+
+        loginView.passwordEyeIV.setOnClickListener {
+            isPasswordVisible = !isPasswordVisible // Toggle the visibility status
+            togglePasswordVisibility(isPasswordVisible)
+        }
 
         if (Pref.isRememberMe) {
             loginView.usernameEDT.setText(Pref.PhnNo)
@@ -79,6 +165,23 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
             }
         }
 
+    }
+
+    private fun togglePasswordVisibility(isVisible: Boolean) {
+        if (isVisible) {
+            // Show password
+            loginView.passwordEDT.inputType = InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
+            loginView.passwordEyeIV.setImageResource(R.drawable.password_eye)
+             // Update the eye icon to open
+        } else {
+            // Hide password
+            loginView.passwordEDT.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
+            loginView.passwordEyeIV.setImageResource(R.drawable.eye)
+            // Update the eye icon to closed
+        }
+
+        // Move the cursor to the end of the password field after visibility toggle
+        loginView.passwordEDT.setSelection(loginView.passwordEDT.text!!.length)
     }
 
     private fun checkPermission() {
@@ -155,15 +258,15 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
                     binding!!.progressWheel.stopSpinning()
 
                     if (loginResponse.status == NetworkConstant.SUCCESS) {
-                        callUserConfigApi()
+                        callUserConfigApi(loginResponse)
 
-                        if (Pref.temp_user_id == loginResponse.user_details!!.user_id) {
+                        /*if (Pref.temp_user_id == loginResponse.user_details!!.user_id) {
                             doAfterLoginFunctionality(loginResponse)
 
                         }
                         else {
                             doAfterLoginFunctionality(loginResponse)
-                        }
+                        }*/
 
                     }
                     else if (loginResponse.status == "220") {
@@ -196,10 +299,10 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
         )
     }
 
-    private fun callUserConfigApi() {
+    private fun callUserConfigApi(loginResponse: LoginResponse) {
         val repository = UserConfigRepoProvider.provideUserConfigRepository()
         DashboardActivity.compositeDisposable.add(
-            repository.userConfig(Pref.user_id!!)
+            repository.userConfig(/*Pref.user_id!!*/ loginResponse.user_details!!.user_id.toString())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe({ result ->
@@ -210,13 +313,14 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
                             if (response.getconfigure != null && response.getconfigure!!.size > 0) {
                                 for (i in response.getconfigure!!.indices) {
                                     //code end mantis id 27436 IsShowCRMOpportunity,IsEditEnableforOpportunity,IsDeleteEnableforOpportunity functionality Puja 21.05.2024 V4.2.8
-                                    if (response.getconfigure?.get(i)?.Key.equals("IsUserWiseLMSEnable", ignoreCase = true)) {
+                                   /* if (response.getconfigure?.get(i)?.Key.equals("IsUserWiseLMSEnable", ignoreCase = true)) {
                                         Pref.IsUserWiseLMSEnable = response.getconfigure!![i].Value == "1"
                                         if (!TextUtils.isEmpty(response.getconfigure?.get(i)?.Value)) {
                                             Pref.IsUserWiseLMSEnable = response.getconfigure?.get(i)?.Value == "1"
                                         }
                                     }
-                                    else if (response.getconfigure?.get(i)?.Key.equals("IsUserWiseLMSFeatureOnly", ignoreCase = true)) {
+                                    else*/
+                                    if (response.getconfigure?.get(i)?.Key.equals("IsUserWiseLMSFeatureOnly", ignoreCase = true)) {
                                         Pref.IsUserWiseLMSFeatureOnly = response.getconfigure!![i].Value == "1"
                                         if (!TextUtils.isEmpty(response.getconfigure?.get(i)?.Value)) {
                                             Pref.IsUserWiseLMSFeatureOnly = response.getconfigure?.get(i)?.Value == "1"
@@ -229,17 +333,17 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
                         }
                     }
 
-                    getConfigFetchApi()
+                    getConfigFetchApi(loginResponse)
 
                 }, { error ->
                     error.printStackTrace()
-                    getConfigFetchApi()
+                    getConfigFetchApi(loginResponse)
                 })
         )
     }
 
     @SuppressLint("SuspiciousIndentation")
-    private fun getConfigFetchApi() {
+    private fun getConfigFetchApi(loginResponse: LoginResponse) {
 
         val repository = ConfigFetchRepoProvider.provideConfigFetchRepository()
         DashboardActivity.compositeDisposable.add(
@@ -275,6 +379,13 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
                         if (configResponse.ShowRetryIncorrectQuiz != null)
                             Pref.ShowRetryIncorrectQuiz = configResponse.ShowRetryIncorrectQuiz!!
 
+                        if (Pref.temp_user_id == loginResponse.user_details!!.user_id) {
+                                                    doAfterLoginFunctionality(loginResponse)
+
+                                                }
+                                                else {
+                                                    doAfterLoginFunctionality(loginResponse)
+                                                }
                     }
 
                 }, { error ->

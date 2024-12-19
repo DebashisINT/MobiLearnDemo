@@ -24,20 +24,22 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
 
+
         <com.google.android.material.navigation.NavigationView
             android:id="@+id/navView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:menu="@menu/app_menu"
-            android:background="#e4f1ff"
-            app:dividerInsetStart="@dimen/_60sdp"
-            app:dividerInsetEnd="@dimen/_50sdp"
+            android:background="#feeeef"
+            app:itemIconPadding="@dimen/_12sdp"
+            app:itemVerticalPadding="@dimen/_14sdp"
             app:itemTextColor="@color/black"
             app:drawerLayoutCornerSize="@dimen/_1sdp"
             app:itemShapeFillColor="@color/transparent"
             app:headerLayout="@layout/menu_header"
             android:theme="@style/navigationView"
             app:itemIconSize="@dimen/_28sdp"
+            app:itemBackground="@drawable/back_round_corner_grey"
             android:fitsSystemWindows="true"
             android:layout_gravity="start"/>
 

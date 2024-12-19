@@ -51,15 +51,15 @@
 
         <ImageView
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_65sdp"
-            android:background="@drawable/img_menu_top_adv"
+            android:layout_height="@dimen/_105sdp"
+            android:background="@drawable/menu_top_design"
             android:scaleType="centerCrop"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginTop="@dimen/_25sdp">
+            android:layout_marginTop="@dimen/_20sdp">
 
             <androidx.cardview.widget.CardView
                 android:layout_width="wrap_content"
@@ -67,19 +67,22 @@
                 app:cardCornerRadius="@dimen/_250sdp"
                 android:layout_gravity="center"
                 app:cardElevation="@dimen/_4sdp"
+                android:outlineAmbientShadowColor="@color/white"
+                android:outlineSpotShadowColor="@color/white"
                 app:cardBackgroundColor="@color/transparent"
                 android:layout_marginLeft="@dimen/_10sdp">
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/iv_profile_picture_menu_adv"
-                    android:layout_width="@dimen/_65sdp"
-                    android:layout_height="@dimen/_65sdp"
+                    android:layout_width="@dimen/_75sdp"
+                    android:layout_height="@dimen/_75sdp"
+                    android:paddingBottom="@dimen/_5sdp"
                     android:layout_gravity="left"
-                    android:src="@drawable/ic_menu_profile_image"
-                    app:civ_border_color="#00A6C5E8"
-                    app:civ_circle_background_color="#00A6C5E8"
+                    android:src="@drawable/user_img"
+                    app:civ_border_color="@color/trans_50"
+                    app:civ_circle_background_color="#0001070F"
                     app:civ_fill_color="@color/black"
-                    app:civ_border_width="0dp"
+                    app:civ_border_width="@dimen/_3sdp"
                     app:civ_border_overlay="false" />
 
             </androidx.cardview.widget.CardView>
@@ -92,9 +95,9 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_gravity="end"
+            android:layout_marginTop="@dimen/_30sdp"
             android:layout_marginRight="@dimen/_10sdp"
             android:gravity="center|top"
-            android:layout_marginTop="@dimen/_10sdp"
             android:padding="@dimen/_5sdp">
 
             <androidx.cardview.widget.CardView
@@ -108,8 +111,8 @@
                 android:layout_marginRight="@dimen/_3sdp">
 
                 <ImageView
-                    android:layout_width="@dimen/_27sdp"
-                    android:layout_height="@dimen/_27sdp"
+                    android:layout_width="@dimen/_35sdp"
+                    android:layout_height="@dimen/_35sdp"
                     android:background="@drawable/ic_logout2_adv"
                     android:layout_gravity="center" />
 
@@ -121,7 +124,7 @@
                 android:text="Logout"
                 android:gravity="top"
                 android:fontFamily="@font/poppins_regular"
-                android:textSize="@dimen/_11sdp"
+                android:textSize="@dimen/_13sdp"
                 android:textColor="@color/white"/>
 
         </LinearLayout>
@@ -137,9 +140,9 @@
         android:gravity="left"
         android:layout_marginLeft="@dimen/_10sdp"
         android:layout_marginTop="@dimen/_3sdp"
-        android:textColor="@color/black"
-        android:textSize="@dimen/_12sdp"
-        android:fontFamily="@font/poppins_semibold"
+        android:fontFamily="@font/poppins_medium"
+        android:textColor="@android:color/black"
+        android:textSize="@dimen/_13sdp"
         android:textStyle="normal"/>
 
     <LinearLayout
@@ -205,6 +208,7 @@
                 android:fontFamily="@font/poppins_regular"
                 android:textSize="@dimen/_12sdp"
                 android:singleLine="true"
+                android:textColorHint="#a4a4a4"
                 android:background="@color/transparent"
                 android:layout_marginLeft="@dimen/_5sdp"/>
 
@@ -215,7 +219,7 @@
                 app:cardCornerRadius="@dimen/_250sdp"
                 android:layout_gravity="center"
                 app:cardElevation="@dimen/_5sdp"
-                app:cardBackgroundColor="@color/toolbar_lms"
+                app:cardBackgroundColor="#33bda5"
                 android:layout_marginRight="@dimen/_4sdp">
 
                 <ImageView

@@ -72,14 +72,14 @@
                     android:layout_width="62dp"
                     android:layout_height="62dp"
                     android:src="@drawable/ic_dashboard_filter_floating_icon"
-                    android:tint="#160f53"  />
+                    app:tint="#160f53" />
                 <ImageView
                     android:layout_width="@dimen/_15sdp"
                     android:layout_height="@dimen/_15sdp"
                     android:layout_gravity="center"
                     android:src="@drawable/ic_filter_red"
-                    android:tint="@color/color_star_leader"
-                    android:layout_marginTop="@dimen/_2sdp"/>
+                    android:layout_marginTop="@dimen/_2sdp"
+                    app:tint="@color/color_star_leader" />
             </FrameLayout>
         </LinearLayout>
     </LinearLayout>

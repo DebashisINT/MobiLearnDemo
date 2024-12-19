@@ -14,7 +14,7 @@
     <string name="login_net_connected1" translatable="false">You can login now.</string>
     <string name="login_net_disconnected" translatable="false">Internet is disconnected, you cannot login, please switch on the internet.</string>
     <string name="login_net_disconnected1" translatable="false">Please switch on the internet.</string>
-    <string name="remember_me" translatable="false">Remember me</string>
+    <string name="remember_me" translatable="false">Remember Me</string>
     <string name="share_log" translatable="false">Share Logs</string>
     <string name="no_internet" translatable="false">Please check your internet connection.</string>
     <string name="no_data_found" translatable="false">No data found</string>

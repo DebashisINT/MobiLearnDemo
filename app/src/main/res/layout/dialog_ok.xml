@@ -49,7 +49,7 @@
                 android:layout_centerVertical="true"
                 android:src="@drawable/ic_close"
                 android:layout_gravity="center|end"
-                android:tint="@color/red"/>
+                app:tint="@color/red" />
 
 
         </FrameLayout>

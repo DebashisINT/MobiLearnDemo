@@ -23,7 +23,7 @@ object Pref : PreferenceHolder() {
     var loc_k : String by bindToPreferenceField("", "loc_k")
     var firebase_k : String by bindToPreferenceField("", "firebase_k")
     //end mantis id 0027432 loc_k & firebase_k functionality Puja 08-05-2024 v4.2.7
-    var IsUserWiseLMSEnable: Boolean by bindToPreferenceField(false, "IsUserWiseLMSEnable")
+    //var IsUserWiseLMSEnable: Boolean by bindToPreferenceField(false, "IsUserWiseLMSEnable")
     var IsUserWiseLMSFeatureOnly: Boolean by bindToPreferenceField(false, "IsUserWiseLMSFeatureOnly")
 
     var QuestionAfterNoOfContentForLMS: String by bindToPreferenceField("1", "QuestionAfterNoOfContentForLMS")

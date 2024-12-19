@@ -10,12 +10,14 @@
     android:layout_marginTop="@dimen/_10sdp"
     app:cardCornerRadius="@dimen/_10sdp"
     android:layout_marginBottom="@dimen/_5sdp"
+    app:cardBackgroundColor="@color/white"
     android:background="#FFFFFF">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:background="#FFFFFF"
         >
 
         <LinearLayout
@@ -29,13 +31,15 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:background="#FFFFFF">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:paddingEnd="@dimen/_4sdp"
+                android:background="#FFFFFF"
                 >
 
                 <LinearLayout

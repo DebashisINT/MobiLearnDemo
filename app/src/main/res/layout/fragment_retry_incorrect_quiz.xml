@@ -41,7 +41,6 @@
                     <ImageView
                         android:layout_width="@dimen/_20sdp"
                         android:layout_height="@dimen/_20sdp"
-                        android:src="@drawable/topic_book_icon"
                         android:layout_gravity="top"
                         android:layout_marginTop="@dimen/_9sdp"/>
 
@@ -139,7 +138,7 @@
             android:layout_gravity="center"
             android:layout_marginStart="@dimen/_10sdp"
             android:layout_marginTop="@dimen/_5sdp"
-            android:src="@drawable/topic_book_icon"/>
+            />
 
         <TextView
 
@@ -264,13 +263,14 @@
                     android:layout_marginStart="@dimen/_13sdp"
                     android:layout_marginEnd="@dimen/_13sdp"
                     android:layout_marginTop="@dimen/_5sdp"
-                    >
+                    wheel:cardBackgroundColor="@color/white"
+                    android:background="@color/white">
                     <LinearLayout
                         android:id="@+id/ll_content_root"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:background="@color/white">
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -297,6 +297,7 @@
                             android:orientation="horizontal"
                             android:layout_marginStart="@dimen/_5sdp"
                             android:layout_marginEnd="@dimen/_5sdp"
+                            android:background="@color/white"
                             android:padding="3dp">
 
                             <androidx.cardview.widget.CardView
@@ -401,7 +402,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Incorrrect Question(s)"
+                        android:text="Incorrrect Answer(s)"
                         android:fontFamily="@font/poppins_medium"
                         android:textColor="@color/white"
                         android:paddingStart="@dimen/_15sdp"/>

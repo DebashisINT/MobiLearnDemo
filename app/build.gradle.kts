@@ -15,7 +15,7 @@ android {
         minSdk = 28
         targetSdk = 34
         versionCode = 1
-        versionName = "5.0.1"
+        versionName = "1.0.1"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -57,35 +57,35 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
-    implementation("com.intuit.sdp:sdp-android:1.1.1")
-    implementation ("com.marcinmoskala.PreferenceHolder:preferenceholder:1.51")
-    implementation ("com.github.bumptech.glide:glide:4.16.0")
-    annotationProcessor("com.github.bumptech.glide:compiler:4.15.0")
-    implementation("com.squareup.okhttp3:logging-interceptor:4.12.0")
-    implementation("com.squareup.okhttp3:okhttp:4.12.0")
-    implementation ("androidx.recyclerview:recyclerview:1.3.1")
-    implementation ("com.airbnb.android:lottie:6.4.1")
-    implementation ("com.google.android.exoplayer:exoplayer:2.19.1")
-    implementation ("androidx.viewpager2:viewpager2:1.0.0")
-    implementation ("com.squareup.retrofit2:retrofit:2.9.0")
-    implementation ("com.squareup.retrofit2:adapter-rxjava2:2.9.0")
-    implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
-    implementation ("com.squareup.okhttp3:logging-interceptor:3.8.0")
-    implementation ("io.reactivex.rxjava2:rxjava:2.1.6")
-    implementation ("io.reactivex.rxjava2:rxandroid:2.1.1")
-    implementation ("org.apache.commons:commons-lang3:3.12.0")
-    implementation ("com.pnikosis:materialish-progress:1.7")
-    implementation ("de.hdodenhof:circleimageview:2.2.0")
-    implementation ("androidx.room:room-runtime:2.6.1")
-    implementation ("androidx.room:room-rxjava2:2.6.1")
-    implementation ("androidx.room:room-common:2.6.1")
-    kapt("androidx.room:room-compiler:2.6.1")
+    implementation(libs.sdp.android)
+    implementation (libs.preferenceholder)
+    implementation (libs.glide)
+    annotationProcessor(libs.compiler)
+    implementation(libs.logging.interceptor)
+    implementation(libs.okhttp)
+    implementation (libs.androidx.recyclerview)
+    implementation (libs.lottie)
+    implementation (libs.exoplayer)
+    implementation (libs.androidx.viewpager2)
+    implementation (libs.retrofit)
+    implementation (libs.adapter.rxjava2)
+    implementation (libs.converter.gson)
+    implementation (libs.logging.interceptor.v380)
+    implementation (libs.rxjava)
+    implementation (libs.rxandroid)
+    implementation (libs.commons.lang3)
+    implementation (libs.materialish.progress)
+    implementation (libs.circleimageview)
+    implementation (libs.androidx.room.runtime)
+    implementation (libs.androidx.room.rxjava2)
+    implementation (libs.androidx.room.common)
+    kapt(libs.androidx.room.compiler)
 
     //Firebase
-    implementation ("com.google.firebase:firebase-core:21.1.1")
-    implementation ("com.google.firebase:firebase-messaging:23.1.0")
-    implementation ("com.google.firebase:firebase-analytics:21.0.0") // or other Firebase libraries you need
-    implementation("com.google.auth:google-auth-library-oauth2-http:1.3.0")
-    implementation("com.vmadalin:easypermissions-ktx:1.0.0")
+    implementation (libs.firebase.core)
+    implementation (libs.firebase.messaging)
+    implementation (libs.firebase.analytics) // or other Firebase libraries you need
+    implementation(libs.google.auth.library.oauth2.http)
+    implementation(libs.easypermissions.ktx)
 
 }

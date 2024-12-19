@@ -563,7 +563,6 @@
                                     android:visibility="visible"
                                     android:scaleType="centerCrop"
                                     android:layout_marginEnd="@dimen/_5sdp"
-                                    android:src="@drawable/final_img_left"
                                     android:layout_gravity="bottom" />
 
                                 <LinearLayout
