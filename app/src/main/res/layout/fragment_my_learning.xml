@@ -376,7 +376,6 @@
             android:textSize="@dimen/_14sdp"
             android:textColor="@color/black"
             android:textStyle="bold"
-            android:fontFamily="@font/poppins_regular"
             android:layout_marginLeft="@dimen/_10sdp"
             android:layout_marginTop="@dimen/_5sdp"/>
 
@@ -427,7 +426,6 @@
                             android:layout_marginEnd="@dimen/_10sdp"
                             android:textSize="@dimen/_13sdp"
                             android:textColor="@color/black"
-                            android:fontFamily="@font/poppins_regular"
                             android:textStyle="bold"
                             android:text="Content Name"
                             android:gravity="center|start"/>

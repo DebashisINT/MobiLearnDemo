@@ -37,7 +37,6 @@
                 android:layout_marginStart="@dimen/_8sdp"
                 android:layout_marginEnd="@dimen/_8sdp"
                 android:textColor="#FFF740"
-                android:fontFamily="@font/poppins_medium"
                 android:layout_gravity="center"
                 android:visibility="visible"
                 android:layout_marginBottom="@dimen/_15sdp"

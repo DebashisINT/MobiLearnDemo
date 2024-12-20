@@ -32,7 +32,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/wait_for_preview"
-            android:textColor="@color/colorPrimary"
+            android:textColor="@color/text_color"
             android:textSize="@dimen/_13sdp"/>
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -41,7 +41,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/no_internet"
-            android:textColor="@color/colorPrimary"
+            android:textColor="@color/text_color"
             android:textSize="@dimen/_13sdp"/>
 
     </LinearLayout>

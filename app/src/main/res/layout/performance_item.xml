@@ -34,7 +34,6 @@
                     android:layout_height="wrap_content"
                     android:text="Topic Name"
                     android:textStyle="normal"
-                    android:fontFamily="@font/poppins_regular"
                     android:layout_marginStart="@dimen/_8sdp"
                     android:textSize="@dimen/_11sdp"
                     android:textColor="#444444"/>
@@ -86,7 +85,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textSize="@dimen/_10sdp"
-                        android:fontFamily="@font/poppins_regular"
                         android:layout_marginTop="@dimen/_7sdp"
                         android:textColor="@color/black"
                         android:textStyle="bold"
@@ -173,7 +171,6 @@
                     android:layout_gravity="center"
                     android:textColor="@color/black"
                     android:layout_marginStart="@dimen/_2sdp"
-                    android:fontFamily="@font/poppins_regular"
                     android:text=""/>
 
             </LinearLayout>
@@ -198,7 +195,6 @@
                     android:layout_gravity="center"
                     android:textColor="@color/black"
                     android:layout_marginStart="@dimen/_2sdp"
-                    android:fontFamily="@font/poppins_regular"
                     android:text=""/>
 
             </LinearLayout>
@@ -231,7 +227,6 @@
                     android:textColor="#684A16"
                     android:layout_marginStart="@dimen/_2sdp"
                     android:paddingEnd="@dimen/_5sdp"
-                    android:fontFamily="@font/poppins_regular"
                     android:text="Review and Retry"/>
             </LinearLayout>
 

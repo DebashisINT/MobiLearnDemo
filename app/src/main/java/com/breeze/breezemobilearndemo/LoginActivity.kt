@@ -3,17 +3,13 @@ package com.breezemobilearndemo
 import android.annotation.SuppressLint
 import android.app.ActivityOptions
 import android.app.Dialog
-import android.content.ContentResolver
-import android.content.ContentUris
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.provider.MediaStore
 import android.provider.Settings
 import android.telephony.TelephonyManager
 import android.text.InputType
@@ -37,19 +33,33 @@ import com.vmadalin.easypermissions.EasyPermissions
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import android.Manifest
+import android.content.ContentResolver
+import android.os.Environment
+import android.provider.MediaStore
+import java.io.File
 
 class LoginActivity : AppCompatActivity(), View.OnClickListener {
 
     var binding: ActivityLoginBinding? = null
     val loginView get() = binding!!
     private var isPasswordVisible = false // Track the visibility status of the password
-    private val REQUEST_CODE = 1
+    private val STORAGE_PERMISSION_CODE = 100
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         // Request permissions at runtime
-        //requestStoragePermissions()
+
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            if (!Environment.isExternalStorageManager()) {
+                val intent = Intent(Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION)
+                this.startActivity(intent)
+            }
+        }
+
+        requestStoragePermissions()
+
 
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(loginView.root)
@@ -57,69 +67,65 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
         initView()
     }
 
-    /*private fun requestStoragePermissions() {
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), REQUEST_CODE)
+    private fun requestStoragePermissions() {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q &&
+            ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED
+        ) {
+            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), STORAGE_PERMISSION_CODE)
         } else {
-            // Permissions already granted, proceed with file deletion
-            deleteFileWithPartialName("app-debug")
+            deleteFile_("mobilearn.apk")
         }
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == REQUEST_CODE) {
+        if (requestCode == STORAGE_PERMISSION_CODE) {
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                // Permission granted, proceed with file deletion
-                deleteFileWithPartialName("app-debug")
+                deleteFile_("mobilearn.apk")
             } else {
-                // Permission denied, handle accordingly
-                Log.d("MainActivity", "Permission denied to access external storage.")
-            }
-        }
-    }*/
-
-    private fun deleteFileWithPartialName(partialName: String) {
-        val contentResolver: ContentResolver = contentResolver
-        val uri: Uri = MediaStore.Downloads.EXTERNAL_CONTENT_URI
-
-        val projection = arrayOf(MediaStore.Downloads._ID, MediaStore.Downloads.DISPLAY_NAME)
-        val selection = "${MediaStore.Downloads.DISPLAY_NAME} LIKE ?"
-        val selectionArgs = arrayOf("%$partialName%")
-
-        // Log the query parameters
-        Log.d("FileDeletion", "Querying for files with name containing: $partialName")
-
-        val cursor = contentResolver.query(uri, projection, selection, selectionArgs, null)
-
-        // Check if the cursor is null or empty
-        if (cursor == null) {
-            Log.d("FileDeletion", "Cursor is null.")
-            return
-        }
-
-        Log.d("FileDeletion", "Cursor count: ${cursor.count}")
-
-        cursor.use {
-            if (it.count == 0) {
-                Log.d("FileDeletion", "No files found matching the criteria.")
-                return
-            }
-
-            while (it.moveToNext()) {
-                val id = it.getLong(it.getColumnIndexOrThrow(MediaStore.Downloads._ID))
-                val fileUri = ContentUris.withAppendedId(uri, id)
-
-                // Delete the file
-                val deletedRows = contentResolver.delete(fileUri, null, null)
-                if (deletedRows > 0) {
-                    Log.d("FileDeletion", "Deleted file: ${it.getString(it.getColumnIndexOrThrow(MediaStore.Downloads.DISPLAY_NAME))}")
-                } else {
-                    Log.d("FileDeletion", "Failed to delete file: ${it.getString(it.getColumnIndexOrThrow(MediaStore.Downloads.DISPLAY_NAME))}")
-                }
+                Log.d("LoginActivity", "Storage permission denied")
             }
         }
     }
+
+    private fun deleteFile_(fileName: String) {
+        val isDeleted = deleteFileFromDownloads(this, fileName)
+        if (isDeleted) {
+            println("File deleted successfully")
+        } else {
+            println("File not found or could not be deleted")
+        }
+    }
+
+    fun deleteFileFromDownloads(context: Context, fileName: String): Boolean {
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            // Scoped storage approach using MediaStore for Android 10+
+            val contentResolver: ContentResolver = context.contentResolver
+            val uri = MediaStore.Downloads.EXTERNAL_CONTENT_URI
+            val selection = "${MediaStore.MediaColumns.DISPLAY_NAME}=?"
+            val selectionArgs = arrayOf(fileName)
+
+            try {
+                // Attempt to delete the file
+                val deletedRows = contentResolver.delete(uri, selection, selectionArgs)
+                deletedRows > 0 // Returns true if rows were deleted
+            } catch (e: Exception) {
+                e.printStackTrace()
+                false
+            }
+        } else {
+            // Legacy approach for Android 9 and below
+            val downloadDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
+            val file = File(downloadDir, fileName)
+
+            if (file.exists()) {
+                file.delete() // Returns true if the file was deleted
+            } else {
+                false // File does not exist
+            }
+        }
+    }
+
     private fun getIMEI() {
 
         try {
@@ -143,8 +149,6 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
         loginView.loginTV.setOnClickListener(this)
         loginView.passwordEyeIV.setOnClickListener(this)
         loginView.cbRememberMe .isChecked = Pref.isRememberMe
-
-
 
         loginView.passwordEyeIV.setOnClickListener {
             isPasswordVisible = !isPasswordVisible // Toggle the visibility status
@@ -192,7 +196,6 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
                 permissionL.add(android.Manifest.permission.POST_NOTIFICATIONS)
         }
         requestPermission(permissionL.toTypedArray(), 999, "Allow Permissions.")
-
     }
     private fun requestPermission(permissionList: Array<String>, reqCode: Int, msg: String) {
         EasyPermissions.requestPermissions(this, msg, reqCode, *permissionList)
@@ -225,15 +228,11 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
                 } catch (e: Exception) {
                     e.printStackTrace()
                 }
-
-
             }
         }
     }
 
     private fun callApi(username: String, password: String) {
-
-
         if (Pref.isRememberMe) {
             Pref.PhnNo = username
             Pref.pwd = password
@@ -312,7 +311,6 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
 
                             if (response.getconfigure != null && response.getconfigure!!.size > 0) {
                                 for (i in response.getconfigure!!.indices) {
-                                    //code end mantis id 27436 IsShowCRMOpportunity,IsEditEnableforOpportunity,IsDeleteEnableforOpportunity functionality Puja 21.05.2024 V4.2.8
                                    /* if (response.getconfigure?.get(i)?.Key.equals("IsUserWiseLMSEnable", ignoreCase = true)) {
                                         Pref.IsUserWiseLMSEnable = response.getconfigure!![i].Value == "1"
                                         if (!TextUtils.isEmpty(response.getconfigure?.get(i)?.Value)) {

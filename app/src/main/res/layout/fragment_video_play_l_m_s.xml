@@ -212,7 +212,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Save"
-                    android:fontFamily="@font/poppins_medium"
                     android:textColor="@color/white"
                     android:layout_gravity="center"/>
 
@@ -255,7 +254,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Like"
-                    android:fontFamily="@font/poppins_medium"
                     android:textColor="@color/white"/>
 
             </LinearLayout>
@@ -288,7 +286,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Comment"
-                    android:fontFamily="@font/poppins_medium"
                     android:textColor="@color/white"/>
 
             </LinearLayout>

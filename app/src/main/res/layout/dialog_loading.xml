@@ -27,7 +27,6 @@
             android:layout_height="@dimen/_55sdp"
             android:text="Loading"
             android:gravity="center|start"
-            android:fontFamily="@font/poppins_regular"
             android:paddingStart="@dimen/_15sdp"
             android:textColor="@color/color_white" />
 

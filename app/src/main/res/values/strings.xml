@@ -1,6 +1,6 @@
 <resources>
-    <string name="app_name">MobilearnLMS</string>
-    <string name="version_name">MobilearnLMS</string>
+    <string name="app_name">Mobilearn</string>
+    <string name="version_name">Mobilearn</string>
     <string name="name_filed_managenent_system" translatable="false">FIELD SALES MANAGEMENT</string>
     <string name="username_new" translatable="false">Username</string>
     <string name="username" translatable="false">Enter Login ID</string>

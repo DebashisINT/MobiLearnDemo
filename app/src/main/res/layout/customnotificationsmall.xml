@@ -44,7 +44,7 @@
             android:layout_height="wrap_content"
             android:minHeight="@dimen/_155sdp"
             android:text="Header"
-            android:textColor="@color/colorPrimaryDark"
+            android:textColor="@color/text_color"
             android:textSize="@dimen/_11sdp" />
 
         <TextView
@@ -55,7 +55,7 @@
             android:layout_toRightOf="@+id/imagenotileft"
             android:paddingTop="@dimen/_5sdp"
             android:text="Nordusk"
-            android:textColor="@color/colorPrimaryDark"
+            android:textColor="@color/text_color"
             android:textSize="@dimen/_10sdp"
             android:visibility="gone"/>
 

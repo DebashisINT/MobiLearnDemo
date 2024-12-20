@@ -35,8 +35,7 @@
                 android:gravity="center"
                 android:padding="@dimen/_10sdp"
                 android:text="@string/app_name"
-                android:fontFamily="@font/poppins_regular"
-                android:textColor="@color/colorPrimary"
+                android:textColor="@color/text_color"
                 android:textSize="@dimen/_12sdp"
                 android:layout_marginLeft="@dimen/_5sdp"/>
 
@@ -70,8 +69,7 @@
             android:minHeight="@dimen/_50sdp"
             android:gravity="center"
             android:text=""
-            android:fontFamily="@font/poppins_regular"
-            android:textColor="@color/colorPrimary"
+            android:textColor="@color/text_color"
             android:textSize="@dimen/_12sdp"
             android:padding="@dimen/_5sdp"/>
 
@@ -98,7 +96,6 @@
                 android:textSize="@dimen/_13sdp"
                 android:gravity="center"
                 android:backgroundTint="@color/toolbar_lms"
-                android:fontFamily="@font/poppins_regular"
                 android:layout_gravity="center"
                 android:background="@drawable/selector_order_history_bg"
                 android:textColor="@drawable/selector_text_clor_blue_white"

@@ -58,7 +58,6 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/_7sdp"
                             android:layout_marginTop="@dimen/_6sdp"
-                            android:fontFamily="@font/poppins_medium"
                             android:textSize="@dimen/_9sdp"
                             android:text="Question : "/>
 
@@ -73,7 +72,6 @@
                                 android:layout_marginTop="@dimen/_5sdp"
                                 android:layout_marginStart="@dimen/_8sdp"
                                 android:text="1"
-                                android:fontFamily="@font/poppins_medium"
                                 android:textColor="@color/black"
                                 />
 
@@ -84,7 +82,6 @@
                                 android:text="The total combined customer lifetime
 values of all of the company's
 customers is known as"
-                                android:fontFamily="@font/poppins_medium"
                                 android:layout_margin="@dimen/_5sdp"
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/_11sdp"
@@ -113,7 +110,7 @@ customers is known as"
                             android:layout_marginTop="@dimen/_6sdp"
                             android:text="Your Answer :"
                             android:textSize="@dimen/_9sdp"
-                            android:fontFamily="@font/poppins_medium"/>
+                            />
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -132,7 +129,6 @@ customers is known as"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:text="Customer-perceived value"
-                                android:fontFamily="@font/poppins_medium"
                                 android:layout_marginStart="@dimen/_5sdp"
                                 android:layout_marginEnd="@dimen/_5sdp"
                                 android:textColor="@color/red_dot"
@@ -180,7 +176,6 @@ customers is known as"
                     android:layout_gravity="center"
                     android:textColor="@color/white"
                     android:layout_marginStart="@dimen/_2sdp"
-                    android:fontFamily="@font/poppins_medium"
                     android:text="Retry"/>
 
             </LinearLayout>

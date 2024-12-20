@@ -75,7 +75,6 @@
                             android:layout_marginStart="@dimen/_10sdp"
                             android:textSize="@dimen/_15sdp"
                             android:textStyle="bold"
-                            android:fontFamily="@font/poppins_medium"
                             android:text="My Learning"
                             android:textColor="@color/black" />
 
@@ -108,7 +107,6 @@
                             android:layout_marginStart="@dimen/_12sdp"
                             android:textSize="@dimen/_14sdp"
                             android:textStyle="normal"
-                            android:fontFamily="@font/poppins_medium"
                             android:text="50"
                             android:textColor="@color/black" />
 
@@ -199,7 +197,6 @@
                             android:layout_marginStart="@dimen/_10sdp"
                             android:textSize="@dimen/_15sdp"
                             android:textStyle="bold"
-                            android:fontFamily="@font/poppins_medium"
                             android:text="My Performance"
                             android:textColor="@color/black" />
 
@@ -231,7 +228,6 @@
                             android:layout_marginStart="@dimen/_12sdp"
                             android:textSize="@dimen/_14sdp"
                             android:textStyle="normal"
-                            android:fontFamily="@font/poppins_medium"
                             android:text="50"
                             android:textColor="@color/black" />
 
@@ -323,7 +319,6 @@
                             android:layout_marginStart="@dimen/_10sdp"
                             android:textSize="@dimen/_15sdp"
                             android:textStyle="bold"
-                            android:fontFamily="@font/poppins_medium"
                             android:text="Leaderboard"
                             android:textColor="@color/black" />
 
@@ -355,7 +350,6 @@
                             android:layout_marginStart="@dimen/_12sdp"
                             android:textSize="@dimen/_14sdp"
                             android:textStyle="normal"
-                            android:fontFamily="@font/poppins_medium"
                             android:text="50"
                             android:textColor="@color/black" />
 

@@ -150,7 +150,7 @@
             android:layout_marginEnd="@dimen/_5sdp"
             android:layout_marginStart="@dimen/_4sdp"
             android:layout_marginTop="@dimen/_10sdp"
-            android:fontFamily="@font/poppins_medium"/>
+           />
     </LinearLayout>
 
 
@@ -175,7 +175,7 @@
             android:textSize="@dimen/_11sdp"
             android:layout_marginStart="@dimen/_4sdp"
             android:layout_marginTop="@dimen/_5sdp"
-            android:fontFamily="@font/poppins_medium"/>
+            />
     </LinearLayout>
 
     <LinearLayout
@@ -284,7 +284,6 @@
                                 android:layout_height="wrap_content"
                                 android:text="Topic Name"
                                 android:textStyle="normal"
-                                android:fontFamily="@font/poppins_medium"
                                 android:layout_marginStart="@dimen/_8sdp"
                                 android:textSize="@dimen/_11sdp"
                                 android:textColor="#8D8D8D"/>
@@ -403,7 +402,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Incorrrect Answer(s)"
-                        android:fontFamily="@font/poppins_medium"
                         android:textColor="@color/white"
                         android:paddingStart="@dimen/_15sdp"/>
 
@@ -425,7 +423,6 @@
 
             <TextView
                 android:id="@+id/no_incrcct_answr"
-                android:fontFamily="@font/poppins_medium"
                 android:textColor="@color/black"
                 android:layout_gravity="center"
                 android:gravity="center"

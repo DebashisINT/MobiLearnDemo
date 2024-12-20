@@ -25,7 +25,6 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Topic Name"
-                android:fontFamily="@font/poppins_regular"
                 android:textStyle="normal"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:layout_marginStart="@dimen/_6sdp"
@@ -78,7 +77,6 @@
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/_10sdp"
                     android:text="Content Title"
-                    android:fontFamily="@font/poppins_regular"
                     android:layout_marginTop="@dimen/_5sdp"
                     android:textColor="@color/black"
                     android:textStyle="bold"
@@ -90,7 +88,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_3sdp"
                     android:textColor="#969696"
-                    android:fontFamily="@font/poppins_regular"
                     android:text="Content Description"
                     android:textSize="@dimen/_9sdp" />
 

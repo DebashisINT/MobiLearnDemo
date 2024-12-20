@@ -20,7 +20,6 @@
             android:textColor="@color/black"
             android:gravity="center|start"
             android:layout_marginStart="@dimen/_10sdp"
-            android:fontFamily="@font/poppins_regular"
             android:hint="Text"/>
 
         <View

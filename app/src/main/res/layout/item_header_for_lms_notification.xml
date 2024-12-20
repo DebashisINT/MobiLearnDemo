@@ -21,7 +21,6 @@
             android:textSize="@dimen/_15sdp"
             android:text="Date"
             android:textStyle="bold"
-            android:fontFamily="@font/poppins_regular"
             android:textColor="@color/black"
             android:layout_marginEnd="@dimen/_10sdp"
             android:layout_marginStart="@dimen/_15sdp"/>
